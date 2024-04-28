@@ -1,5 +1,7 @@
 from flask import Flask
 
+# Run website with "flask --app app run"
+
 app = Flask(__name__)
 
 
