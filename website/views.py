@@ -1,8 +1,8 @@
 # Stores Website URLs
-from flask import Blueprint  # views can be defined in multiple files
+from flask import Blueprint, render_template  # views can be defined in multiple files using Blueprint
 
 views = Blueprint('views', __name__)  # blueprint setup
 
 @views.route('/')
 def home():
-    return "<h1>Hello World!</h1>"
+    return render_template("home.html")
