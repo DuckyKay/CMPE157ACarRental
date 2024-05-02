@@ -1,1 +1,33 @@
 /* our CSS will go here */
+@font-face {
+    font-family: Candara;
+    src: url('Candara.ttf');
+}
+
+@font-face {
+    font-family: calibri;
+    src: url('calibri.ttf');
+}
+
+.navbar {
+    background-color: black;
+    font-family: Candara;
+}
+
+.navbar-collapse {
+    flex-grow: 0;
+}
+
+.navbar-brand {
+    font-size: 1.75em;
+}
+
+.form-control {
+    font-family: calibri;
+    font-size: 1.15em;
+    border: none;
+}
+
+.nav-link {
+    font-size: 1.25em;
+}
