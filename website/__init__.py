@@ -9,7 +9,7 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'changeKeyLater' # encrypt cookies <-- we will have to hide this key locally
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}' # sqlite DB stored in website folder
-    db.init_app(app) 
+    db.init_app(app)
 
     from .views import views
     from .auth import auth
@@ -17,10 +17,10 @@ def create_app():
     # Define prefix for route if you want
     app.register_blueprint(views,url_prefix='/')
     app.register_blueprint(auth,url_prefix='/')
-    
+
     # need to import ALL CLASSES
     from .models import User, Note
-    
+
     create_database(app)
 
     return app
@@ -32,4 +32,3 @@ def create_database(app):
             print('Created Database!')
         else:
             print('Database already exists!')
-    
