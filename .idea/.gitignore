@@ -9,3 +9,10 @@
 # From us lol
 /instance/
 /instance
+
+# Kevins
+checkflask.py
+website/__pycache__/__init__.cpython-39.pyc
+website/__pycache__/auth.cpython-39.pyc
+website/__pycache__/models.cpython-39.pyc
+website/__pycache__/views.cpython-39.pyc
