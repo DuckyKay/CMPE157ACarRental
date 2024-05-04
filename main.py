@@ -1,7 +1,7 @@
 from flask import Flask
 from website import create_app
 
-# Run website with "flask --app main run"
+# Run website with "flask --app main --debug run" <- debug for development purposes. DO NOT run with debug on release
 
 app = create_app()
 
