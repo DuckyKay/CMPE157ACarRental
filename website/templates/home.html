@@ -7,7 +7,7 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-<div class="about-us">
+<div class="about-us my-5">
     <h1 class="h1"> About Us</h1>
     <p class="lead">
         I need some placeholder text, so I'll put some stuff from our project proposal. This project will manage a car
@@ -19,5 +19,26 @@
     </p>
 </div>
 
-<h2 class="h1"> Try our new cars</h2>
+<div class="car-list">
+    <h2 class="h1"> Try our new cars</h2>
+
+    <div class="card-columns">
+        {% for i in range(1,15) %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="car-location"><i class="fa fa-map-marker" aria-hidden="true"></i> San Jose, CA</div>
+                <div class="car-model h3 mb-0">Some Toyota Car</div>
+                <div class="car-price h5">$85/day</div>
+                <div class="car-mileage">
+                    Mileage: 15,157
+                    <button class="btn text-light px-4 py-1">Reserve</button>
+                </div>
+            </div>
+
+            <img class="card-img-bottom" src="{{ url_for('static', filename='sedan.png') }}.." alt="car">
+        </div>
+        {%endfor%}
+    </div>
+
+</div>
 {% endblock %}
