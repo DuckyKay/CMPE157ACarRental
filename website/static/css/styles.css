@@ -1,17 +1,28 @@
 /* our CSS will go here */
 @font-face {
     font-family: Candara;
-    src: url('Candara.ttf');
+    src: url('../Candara.ttf');
 }
 
 @font-face {
     font-family: calibri;
-    src: url('calibri.ttf');
+    src: url('../calibri.ttf');
+}
+
+body {
+    font-family: calibri;
+    color: #707070;
+    height: 5000px;
+}
+
+h1,
+h2 {
+    font-family: Candara;
 }
 
 .navbar {
-    background-color: black;
     font-family: Candara;
+    background-color: black;
 }
 
 .navbar-collapse {
@@ -22,7 +33,7 @@
     font-size: 1.75em;
 }
 
-.form-control {
+.navbar .form-control {
     font-family: calibri;
     font-size: 1.15em;
     border: none;

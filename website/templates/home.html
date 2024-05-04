@@ -1,11 +1,13 @@
 {% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/popup.css') }}">
+{% endblock %}
+
 {% block title %} Home {% endblock %}
 
 {% block content %}
-<h1>Welcome to our website!</h1>
-<p>This is the home page of our website. Feel free to explore!</p> {# We will block the paragraph so only users can see #}
-{% endblock %}
-=======
 <div class="about-us my-5">
     <h1 class="h1 mb-4"> About Us</h1>
     <p class="lead">
