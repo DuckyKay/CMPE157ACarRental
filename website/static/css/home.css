@@ -7,12 +7,57 @@
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: cover;
-    background-attachment: fixed;
-
     height: 825px;
-    margin-bottom: 2.5em;
 }
 
-.about-us {
-    margin-bottom: 3.5em;
+.card-columns {
+    column-gap: 1.75em;
+}
+
+.card {
+    border-radius: 2em;
+}
+
+.card-body {
+    font-family: calibri;
+    color: #707070;
+}
+
+.car-model {
+    font-family: Candara;
+}
+
+.car-mileage button {
+    float: right;
+    background-color: black;
+    border-radius: 5em;
+}
+
+/* < md size */
+@media (max-width: 768px) {
+    .card-columns {
+        column-count: 1;
+    }
+
+    .hero {
+        height: 500px;
+    }
+}
+
+/* md - lg size */
+@media (min-width: 768px) and (max-width: 992px) {
+    .card-columns {
+        column-count: 2;
+    }
+
+    .hero {
+        height: 650px;
+    }
+}
+
+/* lg - xl size */
+@media (min-width: 992px) and (max-width: 1200px) {
+    .card-columns {
+        column-count: 2;
+    }
 }
