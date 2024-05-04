@@ -1,6 +1,6 @@
-{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block content %}
-<form method="POST">
-  <h3 align="center">Sign Up</h3>
+{% extends "base.html" %} {% block title %}Profile{% endblock %} {% block content %}
+<h2>Profile</h2>
+<form method="POST" action="{{ url_for('auth.update_profile') }}">
   <div class="form-group">
     <label for="email">Email Address</label>
     <input
@@ -8,8 +8,8 @@
       class="form-control"
       id="email"
       name="email"
-      placeholder="Enter email"
-      value="{{ request.form['email'] }}"
+      value="{{ current_user.email }}"
+      readonly
     />
   </div>
   <div class="form-group">
@@ -19,8 +19,7 @@
       class="form-control"
       id="first_name"
       name="first_name"
-      placeholder="Enter first name"
-      value="{{ request.form['first_name'] }}"
+      value="{{ current_user.first_name }}"
     />
   </div>
   <div class="form-group">
@@ -30,8 +29,7 @@
       class="form-control"
       id="last_name"
       name="last_name"
-      placeholder="Enter last name"
-      value="{{ request.form['last_name'] }}"
+      value="{{ current_user.last_name }}"
     />
   </div>
   <div class="form-group">
@@ -41,8 +39,7 @@
       class="form-control"
       id="phone_num"
       name="phone_num"
-      placeholder="Enter phone number"
-      value="{{ request.form['phone_num'] }}"
+      value="{{ current_user.phone_num }}"
     />
   </div>
   <div class="form-group">
@@ -52,8 +49,7 @@
       class="form-control"
       id="birthday"
       name="birthday"
-      placeholder="Enter birthday"
-      value="{{ request.form['birthday'] }}"
+      value="{{ current_user.birthday }}"
     />
   </div>
   <div class="form-group">
@@ -63,8 +59,7 @@
       class="form-control"
       id="card_num"
       name="card_num"
-      placeholder="Enter card number"
-      value="{{ request.form['card_num'] }}"
+      value="{{ current_user.card_num }}"
     />
   </div>
   <div class="form-group">
@@ -74,8 +69,7 @@
       class="form-control"
       id="cvv"
       name="cvv"
-      placeholder="Enter CVV"
-      value="{{ request.form['cvv'] }}"
+      value="{{ current_user.cvv }}"
     />
   </div>
   <div class="form-group">
@@ -85,8 +79,7 @@
       class="form-control"
       id="exp_date"
       name="exp_date"
-      placeholder="Enter expiration date"
-      value="{{ request.form['exp_date'] }}"
+      value="{{ current_user.exp_date }}"
     />
   </div>
   <div class="form-group">
@@ -96,31 +89,26 @@
       class="form-control"
       id="license_num"
       name="license_num"
-      placeholder="Enter license number"
-      value="{{ request.form['license_num'] }}"
-    />
-  </div>
-  <div class="form-group">
-    <label for="password1">Password</label>
-    <input
-      type="password"
-      class="form-control"
-      id="password1"
-      name="password1"
-      placeholder="Enter password"
-    />
-  </div>
-  <div class="form-group">
-    <label for="password2">Confirm Password</label>
-    <input
-      type="password"
-      class="form-control"
-      id="password2"
-      name="password2"
-      placeholder="Confirm password"
+      value="{{ current_user.license_num }}"
     />
   </div>
   <br />
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Update Profile</button>
 </form>
+
+<hr />
+
+<div class="delete-account">
+  <h3>Delete Account</h3>
+  <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+  <button id="deleteAccountBtn" class="btn btn-danger">Delete Account</button>
+</div>
+
+<script>
+  document.getElementById('deleteAccountBtn').addEventListener('click', function() {
+    if (confirm('Are you sure you want to delete your account?')) {
+      window.location.href = "{{ url_for('auth.delete_account') }}";
+    }
+  });
+</script>
 {% endblock %}
