@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for 
 from . import db
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash # password hashing
+from flask_login import login_user, login_required, logout_user, current_user
 
 auth = Blueprint('auth', __name__)  # blueprint setup
 
@@ -14,10 +15,11 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        user = User.query.filter_by(email=email).first()  # search column for entered email and return first result
+        user = User.query.filter(User.email.ilike(email)).first()  # search column for entered email and return first result
         if user:
             if check_password_hash(user.password, password):  # if password matches
                 flash('Logged in successfully!', 'success')
+                login_user(user, remember=True) # while webserver is running. user will stay logged in until they log out
                 return redirect(url_for('views.home'))
             else:
                 flash('Incorrect password, try again', 'error')
@@ -28,8 +30,10 @@ def login():
 
 
 @auth.route('/logout')
+@login_required # cannot access this route unless user is logged in
 def logout():
-    return "<p>Logout</p>"
+    logout_user()
+    return redirect(url_for('auth.login'))
 
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
@@ -40,7 +44,7 @@ def sign_up():
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
-        user = User.query.filter_by(email=email).first()
+        user = User.query.filter(User.email.ilike(email)).first()
         if user:
             flash('Email already exists.', category='error')
         elif len(email) < 4:
@@ -56,7 +60,7 @@ def sign_up():
             db.session.add(new_user)  # add user
             db.session.commit()  # update DB with changes
             flash('Account created!', category='success')
-            return redirect(url_for('views.home'))  # send user to home page
+            return redirect(url_for('auth.login'))  # send user to home page
 
     return render_template("sign_up.html")
 
