@@ -10,16 +10,6 @@
     height: 825px;
 }
 
-.about-us .lead {
-    color: #707070;
-}
-
-.car-list-header,
-.card-body {
-    font-family: calibri;
-    color: #707070;
-}
-
 .car-list-header {
     display: flex;
     justify-content: space-between;

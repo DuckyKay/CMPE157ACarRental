@@ -2,6 +2,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/popup.css') }}">
 {% endblock %}
 
 {% block title %} Home {% endblock %}
@@ -27,15 +28,15 @@
             <span class="form-check-inline h5"><i class="fa fa-filter mr-2" aria-hidden="true"></i>Price per day</span>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="price-low" value="low">
-                <label class="form-check-label h5" for="price-low">$0-$75</label>
+                <label class="form-check-label" for="price-low">$0-$75</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="price-mid" value="mid">
-                <label class="form-check-label h5" for="price-mid">$75-$150</label>
+                <label class="form-check-label" for="price-mid">$75-$150</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="price-high" value="high">
-                <label class="form-check-label h5" for="price-high">$150+</label>
+                <label class="form-check-label" for="price-high">$150+</label>
             </div>
 
         </form>
@@ -50,7 +51,8 @@
                 <div class="car-price h5">$85/day</div>
                 <div class="car-mileage">
                     Mileage: 15,157
-                    <button class="btn text-light px-4 py-1">Reserve</button>
+                    <button class="btn text-light px-4 py-1" data-toggle="modal"
+                        data-target=".login-popup">Reserve</button>
                 </div>
             </div>
 
@@ -58,6 +60,8 @@
         </div>
         {%endfor%}
     </div>
+
+    {% include "/includes/popup.html" %}
 
 </div>
 {% endblock %}

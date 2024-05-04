@@ -9,6 +9,17 @@
     src: url('../calibri.ttf');
 }
 
+body {
+    font-family: calibri;
+    color: #707070;
+    height: 5000px;
+}
+
+h1,
+h2 {
+    font-family: Candara;
+}
+
 .navbar {
     font-family: Candara;
     background-color: black;
@@ -22,7 +33,7 @@
     font-size: 1.75em;
 }
 
-.form-control {
+.navbar .form-control {
     font-family: calibri;
     font-size: 1.15em;
     border: none;
@@ -30,18 +41,4 @@
 
 .nav-link {
     font-size: 1.25em;
-}
-
-h1,
-h2 {
-    font-family: Candara;
-    color: #707070;
-}
-
-p {
-    font-family: calibri;
-}
-
-body {
-    height: 5000px;
 }

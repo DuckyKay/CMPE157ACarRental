@@ -1,0 +1,25 @@
+.modal-content {
+    border-radius: 1.5em;
+}
+
+.modal-header {
+    border: none;
+}
+
+.modal-title {
+    font-family: Candara;
+}
+
+.modal-header .close {
+    font-size: 2em;
+    padding-top: 0.25em;
+}
+
+.login-form {
+    font-size: 1.15em;
+}
+
+.login-button {
+    background-color: black;
+    width: 100%;
+}
