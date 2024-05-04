@@ -10,17 +10,28 @@
     height: 825px;
 }
 
+.about-us .lead {
+    color: #707070;
+}
+
+.car-list-header,
+.card-body {
+    font-family: calibri;
+    color: #707070;
+}
+
+.car-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
 .card-columns {
     column-gap: 1.75em;
 }
 
 .card {
     border-radius: 2em;
-}
-
-.card-body {
-    font-family: calibri;
-    color: #707070;
 }
 
 .car-model {
@@ -35,6 +46,10 @@
 
 /* < md size */
 @media (max-width: 768px) {
+    .car-list-header {
+        display: block;
+    }
+
     .card-columns {
         column-count: 1;
     }
@@ -46,6 +61,10 @@
 
 /* md - lg size */
 @media (min-width: 768px) and (max-width: 992px) {
+    .car-list-header {
+        display: block;
+    }
+
     .card-columns {
         column-count: 2;
     }
