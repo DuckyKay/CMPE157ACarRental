@@ -20,7 +20,7 @@ def create_app():
     app.register_blueprint(auth,url_prefix='/')
 
     # need to import ALL CLASSES
-    from .models import User, Note
+    from .models import User, Car, Location, Reservation
 
     create_database(app)
 
