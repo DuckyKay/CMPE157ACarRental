@@ -41,13 +41,5 @@
     font-size: 1.25em;
     margin-top: -0.65em;
     color: #707070;
-}
-
-.form-step,
-#back {
     display: none;
-}
-
-.form-step-active {
-    display: block;
 }
