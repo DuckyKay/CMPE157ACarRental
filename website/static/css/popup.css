@@ -15,16 +15,18 @@
     padding-top: 0.5em;
 }
 
-.login-form {
+.auth-form {
     font-size: 1.15em;
 }
 
-.login-form label {
+.auth-form label {
     font-size: 1rem;
     margin-bottom: 0.25em;
 }
 
-.login-button {
+#login-btn,
+#signup-btn,
+#next {
     background-color: black;
     font-size: 0.9em;
     width: 100%;
@@ -33,4 +35,19 @@
 .modal-footer {
     justify-content: flex-start;
     border: none;
+}
+
+#back {
+    font-size: 1.25em;
+    margin-top: -0.65em;
+    color: #707070;
+}
+
+.form-step,
+#back {
+    display: none;
+}
+
+.form-step-active {
+    display: block;
 }

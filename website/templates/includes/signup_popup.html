@@ -1,0 +1,116 @@
+<div class="modal" id="signup-popup" tabindex="-1" role="dialog" aria-labelledby="signup-popup" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="width: 435px;" role="document">
+        <div class="modal-content p-3">
+            <div class="modal-header pb-0">
+                <div>
+                    <div>
+                        <button class="btn p-0 mr-2" id="back">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                        <h2 class="modal-title d-inline" id="signup">Sign Up</h2>
+                    </div>
+                    <div class="info">
+                        <i class="fa fa-info-circle mr-1" aria-hidden="true"></i>
+                        <span class="info-text">Account Information</span>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="auth-form">
+                    <div class="form-step form-step-active">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" />
+                            </div>
+                            <div class="form-group col">
+                                <label for="confirm-password">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirm-password"
+                                    name="confirm-password" />
+                            </div>
+                        </div>
+                        <button class="btn text-white mt-3" type="button" id="next">Next</button>
+                    </div>
+                    <div class="form-step">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="first-name">First Name</label>
+                                <input type="text" class="form-control" id="first-name" name="first-name" />
+                            </div>
+                            <div class="form-group col">
+                                <label for="last-name">Last Name</label>
+                                <input type="password" class="form-control" id="last-name" name="last-name" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="birthday">Birthday</label>
+                                <input type="date" class="form-control" id="birthday" name="birthday" />
+                            </div>
+                            <div class="form-group col">
+                                <label for="phone_num">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone_num" name="phone_num" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="license_num">License Number</label>
+                            <input type="text" class="form-control" id="license_num" name="license_num" />
+                        </div>
+                        <button class="btn text-white mt-3" id="signup-btn">Sign up</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer pt-0 pb-4">
+                <p>Already have an account?
+                    <a href="/" data-toggle="modal" data-dismiss="modal" data-target="#login-popup">Sign in</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block javascript %}
+<script>
+    const signupModal = document.getElementById("signup-popup");
+    const signupForm = document.getElementsByClassName("auth-form")[1];
+    const info = document.getElementsByClassName("info-text")[1];
+
+    const steps = document.getElementsByClassName("form-step");
+    const backBtn = document.getElementById("back");
+    const nextBtn = document.getElementById("next");
+
+    const stepOne = () => {
+        steps[0].classList.add("form-step-active");
+        steps[1].classList.remove("form-step-active");
+        info.innerHTML = "Account Information";
+        backBtn.style.display = "none";
+    }
+
+    const stepTwo = () => {
+        steps[0].classList.remove("form-step-active");
+        steps[1].classList.add("form-step-active");
+        info.innerHTML = "Must match Driver's License";
+        backBtn.style.display = "inline-block";
+    }
+
+    backBtn.addEventListener("click", () => stepOne());
+    nextBtn.addEventListener("click", () => stepTwo());
+
+    const observer2 = new MutationObserver(() => {
+        stepOne();
+        signupForm.reset();
+    });
+    observer2.observe(signupModal, { attributes: true, attributeFilter: ["class"] });
+
+</script>
+{% endblock%}

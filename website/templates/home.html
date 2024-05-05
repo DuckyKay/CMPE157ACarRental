@@ -52,7 +52,7 @@
                 <div class="car-mileage">
                     Mileage: 15,157
                     <button class="btn text-light px-4 py-1" data-toggle="modal"
-                        data-target=".login-popup">Reserve</button>
+                        data-target="#login-popup">Reserve</button>
                 </div>
             </div>
 
@@ -61,7 +61,8 @@
         {%endfor%}
     </div>
 
-    {% include "/includes/popup.html" %}
+    {% include "/includes/login_popup.html" %}
+    {% include "/includes/signup_popup.html" %}
 
 </div>
 {% endblock %}
