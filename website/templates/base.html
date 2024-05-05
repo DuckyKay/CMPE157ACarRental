@@ -43,7 +43,7 @@
                 <div class="collapse navbar-collapse" id="navbar">
                     <div class="navbar-nav ml-auto">
                         {% if current_user.is_authenticated %}
-                        <a class="nav-item nav-link text-white" id="home" href="/">Home</a>
+                        <a class="nav-item nav-link text-white" id="home" href="/payment">My Reservations</a>
                         <a class="nav-item nav-link text-white" id="logout" href="/logout">Logout</a>
                         <a class="nav-item nav-link text-white" id="profile" href="{{ url_for('auth.profile') }}">
                             <i class="fa fa-user"></i> Profile
