@@ -49,6 +49,26 @@
 <h3>Cars</h3>
 <form method="POST" action="{{ url_for('auth.add_car') }}">
   <div class="form-group">
+    <label for="location_id">Location</label>
+    <select class="form-control" id="location_id" name="location_id" required>
+      {% for location in locations %}
+      <option value="{{ location.id }}">{{ location.city }}, {{ location.state }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="price_per_hour">Price per Hour</label>
+    <input type="number" step="0.01" class="form-control" id="price_per_hour" name="price_per_hour" required>
+  </div>
+  <div class="form-group">
+    <label for="plate_num">Plate Number</label>
+    <input type="text" class="form-control" id="plate_num" name="plate_num" required>
+  </div>
+  <div class="form-group">
+    <label for="mileage">Mileage</label>
+    <input type="number" step="0.1" class="form-control" id="mileage" name="mileage" required>
+  </div>
+  <div class="form-group">
     <label for="make">Make</label>
     <input type="text" class="form-control" id="make" name="make" required>
   </div>
@@ -57,11 +77,7 @@
     <input type="text" class="form-control" id="model" name="model" required>
   </div>
   <div class="form-group">
-    <label for="price_per_hour">Price per Hour</label>
-    <input type="number" step="0.01" class="form-control" id="price_per_hour" name="price_per_hour" required>
-  </div>
-  <div class="form-group">
-    <label for="photo_url">Image URL</label>
+    <label for="photo_url">Photo URL</label>
     <input type="url" class="form-control" id="photo_url" name="photo_url" required>
   </div>
   <button type="submit" class="btn btn-primary">Add Car</button>

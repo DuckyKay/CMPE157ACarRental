@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block title %}Edit Reservation{% endblock %} {% block content %}
+<h2>Edit Reservation</h2>
+<form method="POST" action="{{ url_for('auth.edit_reservation', reservation_id=reservation.id) }}">
+  <div class="form-group">
+    <label for="user_id">User</label>
+    <select class="form-control" id="user_id" name="user_id" required>
+      {% for user in users %}
+      <option value="{{ user.id }}" {% if user.id == reservation.user_id %}selected{% endif %}>
+        {{ user.first_name }} {{ user.last_name }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="car_id">Car</label>
+    <select class="form-control" id="car_id" name="car_id" required>
+      {% for car in cars %}
+      <option value="{{ car.id }}" {% if car.id == reservation.car_id %}selected{% endif %}>
+        {{ car.make }} {{ car.model }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="pickup_time">Pickup Time</label>
+    <input type="datetime-local" class="form-control" id="pickup_time" name="pickup_time" value="{{ reservation.pickup_time|datetime_local }}" required>
+  </div>
+  <div class="form-group">
+    <label for="dropoff_time">Dropoff Time</label>
+    <input type="datetime-local" class="form-control" id="dropoff_time" name="dropoff_time" value="{{ reservation.dropoff_time|datetime_local }}" required>
+  </div>
+  <div class="form-group">
+    <label for="pickup_location_id">Pickup Location</label>
+    <select class="form-control" id="pickup_location_id" name="pickup_location_id" required>
+      {% for location in locations %}
+      <option value="{{ location.id }}" {% if location.id == reservation.pickup_location_id %}selected{% endif %}>
+        {{ location.city }}, {{ location.state }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="return_location_id">Return Location</label>
+    <select class="form-control" id="return_location_id" name="return_location_id" required>
+      {% for location in locations %}
+      <option value="{{ location.id }}" {% if location.id == reservation.return_location_id %}selected{% endif %}>
+        {{ location.city }}, {{ location.state }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Update Reservation</button>
+</form>
+{% endblock %}

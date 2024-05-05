@@ -172,12 +172,23 @@ def delete_location(location_id):
 
 @auth.route('/add-car', methods=['POST'])
 def add_car():
+    location_id = request.form.get('location_id')
+    price_per_hour = request.form.get('price_per_hour')
+    plate_num = request.form.get('plate_num')
+    mileage = request.form.get('mileage')
     make = request.form.get('make')
     model = request.form.get('model')
-    price_per_hour = request.form.get('price_per_hour')
     photo_url = request.form.get('photo_url')
 
-    new_car = Car(make=make, model=model, price_per_hour=price_per_hour, photo_url=photo_url)
+    new_car = Car(
+        location_id=location_id,
+        price_per_hour=price_per_hour,
+        plate_num=plate_num,
+        mileage=mileage,
+        make=make,
+        model=model,
+        photo_url=photo_url
+    )
     db.session.add(new_car)
     db.session.commit()
 
@@ -186,16 +197,20 @@ def add_car():
 @auth.route('/edit-car/<int:car_id>', methods=['GET', 'POST'])
 def edit_car(car_id):
     car = Car.query.get_or_404(car_id)
+    locations = Location.query.all()
 
     if request.method == 'POST':
+        car.location_id = request.form.get('location_id')
+        car.price_per_hour = request.form.get('price_per_hour')
+        car.plate_num = request.form.get('plate_num')
+        car.mileage = request.form.get('mileage')
         car.make = request.form.get('make')
         car.model = request.form.get('model')
-        car.price_per_hour = request.form.get('price_per_hour')
         car.photo_url = request.form.get('photo_url')
         db.session.commit()
         return redirect(url_for('auth.admin_dashboard'))
 
-    return render_template('edit_car.html', car=car)
+    return render_template('edit_car.html', car=car, locations=locations)
 
 @auth.route('/delete-car/<int:car_id>')
 def delete_car(car_id):
@@ -222,17 +237,21 @@ def add_reservation():
 @auth.route('/edit-reservation/<int:reservation_id>', methods=['GET', 'POST'])
 def edit_reservation(reservation_id):
     reservation = Reservation.query.get_or_404(reservation_id)
+    users = User.query.all()
+    cars = Car.query.all()
+    locations = Location.query.all()
 
     if request.method == 'POST':
         reservation.user_id = request.form.get('user_id')
         reservation.car_id = request.form.get('car_id')
         reservation.pickup_time = datetime.strptime(request.form.get('pickup_time'), '%Y-%m-%dT%H:%M')
         reservation.dropoff_time = datetime.strptime(request.form.get('dropoff_time'), '%Y-%m-%dT%H:%M')
-        reservation.price = request.form.get('price')
+        reservation.pickup_location_id = request.form.get('pickup_location_id')
+        reservation.return_location_id = request.form.get('return_location_id')
         db.session.commit()
         return redirect(url_for('auth.admin_dashboard'))
 
-    return render_template('edit_reservation.html', reservation=reservation, users=User.query.all(), cars=Car.query.all())
+    return render_template('edit_reservation.html', reservation=reservation, users=users, cars=cars, locations=locations)
 
 @auth.route('/delete-reservation/<int:reservation_id>')
 def delete_reservation(reservation_id):
@@ -254,6 +273,7 @@ def add_user():
 
     return redirect(url_for('auth.admin_dashboard'))
 
+# THIS ONE IS FOR ADMINS
 @auth.route('/edit-user/<int:user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
     user = User.query.get_or_404(user_id)
@@ -262,6 +282,9 @@ def edit_user(user_id):
         user.email = request.form.get('email')
         user.first_name = request.form.get('first_name')
         user.last_name = request.form.get('last_name')
+        user.phone_num = request.form.get('phone_num')
+        user.birthday = datetime.strptime(request.form.get('birthday'), '%Y-%m-%d').date()
+        user.license_num = request.form.get('license_num')
         db.session.commit()
         return redirect(url_for('auth.admin_dashboard'))
 
