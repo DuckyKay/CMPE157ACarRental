@@ -274,3 +274,8 @@ def delete_user(user_id):
     db.session.commit()
 
     return redirect(url_for('auth.admin_dashboard'))
+
+@auth.route('/payment')
+@login_required # cannot access this route unless user is logged in
+def payment():
+    return render_template('payment.html');

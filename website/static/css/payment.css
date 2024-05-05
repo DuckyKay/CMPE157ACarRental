@@ -1,0 +1,27 @@
+.card {
+    border-radius: 2em;
+}
+
+.car-mileage {
+    margin-top: 0.7em;
+    margin-bottom: 0.4em;
+}
+
+.car-mileage button {
+    display: none;
+}
+
+.payment-form label {
+    font-size: 1rem;
+    margin-bottom: 0em;
+}
+
+.payment-form .form-group {
+    margin-bottom: 0.5em;
+}
+
+#checkout-btn {
+    background-color: black;
+    font-size: 1.1rem;
+    width: 100%;
+}

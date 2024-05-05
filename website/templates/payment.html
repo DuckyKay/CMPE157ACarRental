@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/payment.css') }}">
+{% endblock %}
+
+{% block title %}My Reservations{% endblock %}
+
+{% block content %}
+
+<div class="row mt-5">
+    <div class="col-md-5 col-lg-4.5 col-xl-4">
+        {% include "/includes/car_gridview.html" %}
+    </div>
+    <div class="col-md-7 col-lg-7.5 col-xl-8">
+        <form method="post" class="payment-form">
+            <h2>Reservation Details</h2>
+            <div class="row">
+                <div class="pickup col-md">
+                    <h3 class="h4 mb-1">Pick Up</h3>
+                    <p class="mb-2">1 Washington Sq, San Jose, CA 95192</p>
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label for="pickup-date">Date</label>
+                            <input type="date" class="form-control form-control-sm" name="pickup-date" id="pickup-date">
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="pickup-time">Time</label>
+                            <input type="time" class="form-control form-control-sm" name="pickup-time" id="pickup-time">
+                        </div>
+                    </div>
+                </div>
+                <div class="dropoff col-md">
+                    <h3 class="h4 mb-1">Drop Off</h3>
+                    <p class="mb-2">1 Washington Sq, San Jose, CA 95192</p>
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label for="dropoff-date">Date</label>
+                            <input type="date" class="form-control form-control-sm" name="dropoff-date"
+                                id="dropoff-date">
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="dropoff-time">Time</label>
+                            <input type="time" class="form-control form-control-sm" name="dropoff-time"
+                                id="dropoff-time">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2 class="mt-4">Payment Details</h2>
+            <div class="row">
+                <div class="pay-method col-md">
+                    <h3 class="h4 mb-1">Payment Method</h3>
+                    <div class="form-group">
+                        <label for="card-num">Card Number</label>
+                        <input type="tel" class="form-control form-control-sm" name="card-num" id="card-num">
+                    </div>
+                    <div class="form-group">
+                        <label for="card-holder">Name on Card</label>
+                        <input type="text" class="form-control form-control-sm" name="card-holder" id="card-holder">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-8">
+                            <label for="expire-date">Expiration Date</label>
+                            <input type="date" class="form-control form-control-sm" name="expire-date" id="expire-date">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="cvv">CVV</label>
+                            <input type="tel" class="form-control form-control-sm" name="cvv" id="cvv">
+                        </div>
+                    </div>
+                </div>
+                <div class="billing-info col-md">
+                    <h3 class="h4 mb-1">Billing Info</h3>
+                    <div class="form-group">
+                        <label for="street">Street Address</label>
+                        <input type="text" class="form-control form-control-sm" name="street" id="street">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control form-control-sm" name="city" id="city">
+                        </div>
+                        <div class="form-group col-2">
+                            <label for="state">State</label>
+                            <input type="text" class="form-control form-control-sm" name="state" id="state">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="zip">ZIP code</label>
+                            <input type="tel" class="form-control form-control-sm" name="zip" id="zip">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control form-control-sm" name="email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone-num">Phone Number</label>
+                        <input type="tel" class="form-control form-control-sm" name="phone-num" id="phone-num">
+                    </div>
+                </div>
+            </div>
+            <button class="btn text-white mt-3" id="checkout-btn">Check Out</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
