@@ -11,6 +11,10 @@
     display: none;
 }
 
+.summary span {
+    float: right;
+}
+
 .payment-form label {
     font-size: 1rem;
     margin-bottom: 0em;

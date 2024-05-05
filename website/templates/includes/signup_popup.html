@@ -19,7 +19,7 @@
             </div>
             <div class="modal-body">
                 <form class="auth-form">
-                    <div class="form-step form-step-active">
+                    <div class="form-step">
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" />
@@ -41,7 +41,7 @@
                         </div>
                         <button class="btn text-white mt-3" type="button" id="next">Next</button>
                     </div>
-                    <div class="form-step">
+                    <div class="form-step d-none">
                         <div class="form-row">
                             <div class="form-group col">
                                 <label for="first-name">First Name</label>
@@ -90,15 +90,15 @@
     const nextBtn = document.getElementById("next");
 
     const stepOne = () => {
-        steps[0].classList.add("form-step-active");
-        steps[1].classList.remove("form-step-active");
+        steps[0].classList.remove("d-none");
+        steps[1].classList.add("d-none");
         info.innerHTML = "Account Information";
         backBtn.style.display = "none";
     }
 
     const stepTwo = () => {
-        steps[0].classList.remove("form-step-active");
-        steps[1].classList.add("form-step-active");
+        steps[0].classList.add("d-none");
+        steps[1].classList.remove("d-none");
         info.innerHTML = "Must match Driver's License";
         backBtn.style.display = "inline-block";
     }
