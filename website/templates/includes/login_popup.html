@@ -39,11 +39,8 @@
 <script>
     const loginModal = document.getElementById("login-popup");
     const loginForm = document.getElementsByClassName("auth-form")[0];
-    const loginCloseBtn = document.getElementsByClassName("close")[0];
 
-    loginCloseBtn.addEventListener("click", () => loginForm.reset());
-    loginModal.addEventListener("click", (e) => {
-        if (e.target.contains(loginModal)) loginForm.reset();
-    })
+    const observer1 = new MutationObserver(() => { loginForm.reset() });
+    observer1.observe(loginModal, { attributes: true, attributeFilter: ["class"] });
 </script>
 {% endblock%}

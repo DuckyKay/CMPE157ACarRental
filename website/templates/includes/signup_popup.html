@@ -83,7 +83,6 @@
 <script>
     const signupModal = document.getElementById("signup-popup");
     const signupForm = document.getElementsByClassName("auth-form")[1];
-    const signupCloseBtn = document.getElementsByClassName("close")[1];
     const info = document.getElementsByClassName("info-text")[1];
 
     const steps = document.getElementsByClassName("form-step");
@@ -107,17 +106,11 @@
     backBtn.addEventListener("click", () => stepOne());
     nextBtn.addEventListener("click", () => stepTwo());
 
-    signupCloseBtn.addEventListener("click", () => {
+    const observer2 = new MutationObserver(() => {
         stepOne();
         signupForm.reset();
     });
-
-    signupModal.addEventListener("click", (e) => {
-        if (e.target.contains(signupModal)) {
-            stepOne();
-            signupForm.reset();
-        }
-    });
+    observer2.observe(signupModal, { attributes: true, attributeFilter: ["class"] });
 
 </script>
 {% endblock%}
