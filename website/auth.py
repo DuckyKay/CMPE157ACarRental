@@ -1,9 +1,9 @@
 # Flask Authentication for login
 import datetime
 
-from flask import Blueprint, render_template, request, flash, redirect, url_for  # views can be defined in multiple files
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session  # views can be defined in multiple files
 from . import db
-from .models import User
+from .models import User, Location, Reservation, Car
 from werkzeug.security import generate_password_hash, check_password_hash # password hashing
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -113,3 +113,164 @@ def delete_account():
     logout_user()
     flash('Your account has been deleted.', category='success')
     return redirect(url_for('auth.login'))
+
+@auth.route('/admin', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        password = request.form.get('password')
+        if password == 'CARRENTER1':
+            session['admin_logged_in'] = True
+            return redirect(url_for('auth.admin_dashboard'))
+        else:
+            return "Invalid password. Please try again."
+    return render_template('admin_login.html')
+
+@auth.route('/admin/dashboard')
+def admin_dashboard():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
+    locations = Location.query.all()
+    cars = Car.query.all()
+    reservations = Reservation.query.all()
+    users = User.query.all()
+
+    return render_template('admin_dashboard.html', locations=locations, cars=cars, reservations=reservations, users=users)
+
+@auth.route('/add-location', methods=['POST'])
+def add_location():
+    city = request.form.get('city')
+    state = request.form.get('state')
+    zip_code = request.form.get('zip_code')
+
+    new_location = Location(city=city, state=state, zip_code=zip_code)
+    db.session.add(new_location)
+    db.session.commit()
+
+    return redirect(url_for('auth.admin_dashboard'))
+
+@auth.route('/edit-location/<int:location_id>', methods=['GET', 'POST'])
+def edit_location(location_id):
+    location = Location.query.get_or_404(location_id)
+
+    if request.method == 'POST':
+        location.city = request.form.get('city')
+        location.state = request.form.get('state')
+        location.zip_code = request.form.get('zip_code')
+        db.session.commit()
+        return redirect(url_for('auth.admin_dashboard'))
+
+    return render_template('edit_location.html', location=location)
+
+@auth.route('/delete-location/<int:location_id>')
+def delete_location(location_id):
+    location = Location.query.get_or_404(location_id)
+    db.session.delete(location)
+    db.session.commit()
+
+    return redirect(url_for('auth.admin_dashboard'))
+
+@auth.route('/add-car', methods=['POST'])
+def add_car():
+    make = request.form.get('make')
+    model = request.form.get('model')
+    price_per_hour = request.form.get('price_per_hour')
+    photo_url = request.form.get('photo_url')
+
+    new_car = Car(make=make, model=model, price_per_hour=price_per_hour, photo_url=photo_url)
+    db.session.add(new_car)
+    db.session.commit()
+
+    return redirect(url_for('auth.admin_dashboard'))
+
+@auth.route('/edit-car/<int:car_id>', methods=['GET', 'POST'])
+def edit_car(car_id):
+    car = Car.query.get_or_404(car_id)
+
+    if request.method == 'POST':
+        car.make = request.form.get('make')
+        car.model = request.form.get('model')
+        car.price_per_hour = request.form.get('price_per_hour')
+        car.photo_url = request.form.get('photo_url')
+        db.session.commit()
+        return redirect(url_for('auth.admin_dashboard'))
+
+    return render_template('edit_car.html', car=car)
+
+@auth.route('/delete-car/<int:car_id>')
+def delete_car(car_id):
+    car = Car.query.get_or_404(car_id)
+    db.session.delete(car)
+    db.session.commit()
+
+    return redirect(url_for('auth.admin_dashboard'))
+
+@auth.route('/add-reservation', methods=['POST'])
+def add_reservation():
+    user_id = request.form.get('user_id')
+    car_id = request.form.get('car_id')
+    pickup_time = datetime.strptime(request.form.get('pickup_time'), '%Y-%m-%dT%H:%M')
+    dropoff_time = datetime.strptime(request.form.get('dropoff_time'), '%Y-%m-%dT%H:%M')
+    price = request.form.get('price')
+
+    new_reservation = Reservation(user_id=user_id, car_id=car_id, pickup_time=pickup_time, dropoff_time=dropoff_time, price=price)
+    db.session.add(new_reservation)
+    db.session.commit()
+
+    return redirect(url_for('auth.admin_dashboard'))
+
+@auth.route('/edit-reservation/<int:reservation_id>', methods=['GET', 'POST'])
+def edit_reservation(reservation_id):
+    reservation = Reservation.query.get_or_404(reservation_id)
+
+    if request.method == 'POST':
+        reservation.user_id = request.form.get('user_id')
+        reservation.car_id = request.form.get('car_id')
+        reservation.pickup_time = datetime.strptime(request.form.get('pickup_time'), '%Y-%m-%dT%H:%M')
+        reservation.dropoff_time = datetime.strptime(request.form.get('dropoff_time'), '%Y-%m-%dT%H:%M')
+        reservation.price = request.form.get('price')
+        db.session.commit()
+        return redirect(url_for('auth.admin_dashboard'))
+
+    return render_template('edit_reservation.html', reservation=reservation, users=User.query.all(), cars=Car.query.all())
+
+@auth.route('/delete-reservation/<int:reservation_id>')
+def delete_reservation(reservation_id):
+    reservation = Reservation.query.get_or_404(reservation_id)
+    db.session.delete(reservation)
+    db.session.commit()
+
+    return redirect(url_for('auth.admin_dashboard'))
+
+@auth.route('/add-user', methods=['POST'])
+def add_user():
+    email = request.form.get('email')
+    first_name = request.form.get('first_name')
+    last_name = request.form.get('last_name')
+
+    new_user = User(email=email, first_name=first_name, last_name=last_name)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect(url_for('auth.admin_dashboard'))
+
+@auth.route('/edit-user/<int:user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
+    user = User.query.get_or_404(user_id)
+
+    if request.method == 'POST':
+        user.email = request.form.get('email')
+        user.first_name = request.form.get('first_name')
+        user.last_name = request.form.get('last_name')
+        db.session.commit()
+        return redirect(url_for('auth.admin_dashboard'))
+
+    return render_template('edit_user.html', user=user)
+
+@auth.route('/delete-user/<int:user_id>')
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+
+    return redirect(url_for('auth.admin_dashboard'))
