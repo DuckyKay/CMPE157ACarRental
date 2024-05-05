@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/payment.css') }}">
+{% endblock %}
+
+{% block title %}My Reservations{% endblock %}
+
+{% block content %}
+
+<div class="row mt-4 pt-3">
+    <div class="col-lg-4 col-xl-4">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-lg-12">
+                {% include "/includes/car_gridview.html" %}
+            </div>
+            <div class="summary px-4 mb-4 col-md-6 col-lg-12">
+                <h3>Summary</h3>
+                <div>Price per day <span>$85.00</span></div>
+                <div>Rental Duration <span>2 days</span></div>
+                <div>Taxes <span>$18.28</span></div>
+                <hr>
+                <div class="h4">Total <span>$188.28</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8 col-xl-8 pl-4">
+        <form method="post" class="payment-form">
+            <h3>Reservation Details</h3>
+            <div class="row">
+                <div class="pickup mb-3 col-md">
+                    <h5 class="mb-1">Pick Up</h5>
+                    <p class="mb-2">1 Washington Sq, San Jose, CA 95192</p>
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label for="pickup-date">Date</label>
+                            <input type="date" class="form-control form-control-sm" name="pickup-date" id="pickup-date">
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="pickup-time">Time</label>
+                            <input type="time" class="form-control form-control-sm" name="pickup-time" id="pickup-time">
+                        </div>
+                    </div>
+                </div>
+                <div class="dropoff mb-3 col-md">
+                    <h5 class="mb-1">Drop Off</h5>
+                    <p class="mb-2">1 Washington Sq, San Jose, CA 95192</p>
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label for="dropoff-date">Date</label>
+                            <input type="date" class="form-control form-control-sm" name="dropoff-date"
+                                id="dropoff-date">
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="dropoff-time">Time</label>
+                            <input type="time" class="form-control form-control-sm" name="dropoff-time"
+                                id="dropoff-time">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3 class="mt-3">Payment Details</h3>
+            <div class="row">
+                <div class="pay-method mb-3 col-lg">
+                    <h5 class="mb-1">Payment Method</h5>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="credit-card" id="exist" value="exist">
+                        <label class="form-check-label" for="exist">Choose existing card</label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="credit-card" id="new" value="new" checked>
+                        <label class="form-check-label" for="new">Add new card</label>
+                    </div>
+
+                    <div class="existing-card-form d-none">
+                        <div class="form-group">
+                            <label for="card-select">Select an selecting card</label>
+                            <select class="form-control form-control-sm" id="card-select">
+                                <!-- replace with cards from db -->
+                                {% for i in range(0,3) %}
+                                <option>Visa ending in {{i+1000}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="new-card-form">
+                        <div class="form-group">
+                            <label for="card-num">Card Number</label>
+                            <input type="tel" class="form-control form-control-sm" name="card-num" id="card-num">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-holder">Name on Card</label>
+                            <input type="text" class="form-control form-control-sm" name="card-holder" id="card-holder">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-8">
+                                <label for="expire-date">Expiration Date</label>
+                                <input type="date" class="form-control form-control-sm" name="expire-date"
+                                    id="expire-date">
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="cvv">CVV</label>
+                                <input type="tel" class="form-control form-control-sm" name="cvv" id="cvv">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="billing-info mb-3 col-lg">
+                    <h5 class=" mb-1">Billing Info</h5>
+                    <div class="form-group">
+                        <label for="street">Street Address</label>
+                        <input type="text" class="form-control form-control-sm" name="street" id="street">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control form-control-sm" name="city" id="city">
+                        </div>
+                        <div class="form-group col-2">
+                            <label for="state">State</label>
+                            <input type="text" class="form-control form-control-sm" name="state" id="state">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="zip">ZIP code</label>
+                            <input type="tel" class="form-control form-control-sm" name="zip" id="zip">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control form-control-sm" name="email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone-num">Phone Number</label>
+                        <input type="tel" class="form-control form-control-sm" name="phone-num" id="phone-num">
+                    </div>
+                </div>
+            </div>
+            <button class="btn text-white mt-2" id="checkout-btn">Check Out</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    const radio = document.querySelectorAll("[name=credit-card]");
+    const existingForm = document.querySelector(".existing-card-form");
+    const newForm = document.querySelector(".new-card-form");
+    radio.forEach((r) => {
+        r.addEventListener("change", (e) => {
+            existingForm.classList.toggle("d-none");
+            newForm.classList.toggle("d-none");
+        })
+    })
+</script>
+{% endblock %}
