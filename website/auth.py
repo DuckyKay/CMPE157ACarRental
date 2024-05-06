@@ -1,6 +1,5 @@
 # Flask Authentication for login
-import datetime
-
+from datetime import datetime
 from flask import Blueprint, render_template, request, flash, redirect, url_for, session, jsonify  # views can be defined in multiple files
 from . import db
 from .models import User, Location, Reservation, Car
