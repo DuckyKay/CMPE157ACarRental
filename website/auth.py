@@ -335,3 +335,8 @@ def delete_user(user_id):
 @login_required # cannot access this route unless user is logged in
 def payment():
     return render_template('payment.html');
+
+@auth.route('/reservations')
+@login_required # cannot access this route unless user is logged in
+def reservations():
+    return render_template('reservations.html');
