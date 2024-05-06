@@ -23,77 +23,78 @@
 <div class="car-list">
     <div class="car-list-header mb-4">
         <h2 class="h1">Try our new cars</h2>
-
-        <form action="" method="GET" class="form-inline">
-            <div class="form-group mr-2">
-                <select class="form-control" id="location" name="location">
-                    <option value="">All Locations</option>
-                    {% for location in locations %}
-                    <option value="{{ location.id }}">{{ location.city }}, {{ location.state }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="form-group mr-2">
-                <select class="form-control" id="manufacturer" name="manufacturer">
-                    <option value="">All Manufacturers</option>
-                    {% for manufacturer in manufacturers %}
-                    <option value="{{ manufacturer }}">{{ manufacturer }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="form-group mr-2">
-                <div class="input-group">
-                    <input type="number" class="form-control" id="mileage_min" name="mileage_min" placeholder="Min Mileage">
-                    <div class="input-group-append input-group-prepend">
-                        <span class="input-group-text">to</span>
-                    </div>
-                    <input type="number" class="form-control" id="mileage_max" name="mileage_max" placeholder="Max Mileage">
-                </div>
-            </div>
-
-            <div class="form-group mr-2">
-                <div class="input-group">
-                    <input type="number" class="form-control" id="price_min" name="price_min" placeholder="Min Price">
-                    <div class="input-group-append input-group-prepend">
-                        <span class="input-group-text">to</span>
-                    </div>
-                    <input type="number" class="form-control" id="price_max" name="price_max" placeholder="Max Price">
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Filter</button>
-        </form>
-
-        {% if location_id or manufacturer or mileage_min or mileage_max or price_min or price_max %}
-        <div class="active-filters mt-3">
-            <h5>Active Filters:</h5>
-            <ul class="list-inline">
-                {% if location_id %}
-                <li class="list-inline-item">Location: {{ location.city }}, {{ location.state }}</li>
-                {% endif %}
-                {% if manufacturer %}
-                <li class="list-inline-item">Manufacturer: {{ manufacturer }}</li>
-                {% endif %}
-                {% if mileage_min and mileage_max %}
-                <li class="list-inline-item">Mileage: {{ mileage_min }} - {{ mileage_max }}</li>
-                {% elif mileage_min %}
-                <li class="list-inline-item">Mileage: >= {{ mileage_min }}</li>
-                {% elif mileage_max %}
-                <li class="list-inline-item">Mileage: <= {{ mileage_max }}</li>
-                {% endif %}
-                {% if price_min and price_max %}
-                <li class="list-inline-item">Price per Hour: ${{ price_min }} - ${{ price_max }}</li>
-                {% elif price_min %}
-                <li class="list-inline-item">Price per Hour: >= ${{ price_min }}</li>
-                {% elif price_max %}
-                <li class="list-inline-item">Price per Hour: <= ${{ price_max }}</li>
-                {% endif %}
-            </ul>
-        </div>
-        {% endif %}
     </div>
+
+    <form action="" method="GET" class="form-inline">
+        <div class="form-group mr-2">
+            <select class="form-control" id="location" name="location">
+                <option value="">All Locations</option>
+                {% for location in locations %}
+                <option value="{{ location.id }}">{{ location.city }}, {{ location.state }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group mr-2">
+            <select class="form-control" id="manufacturer" name="manufacturer">
+                <option value="">All Manufacturers</option>
+                {% for manufacturer in manufacturers %}
+                <option value="{{ manufacturer }}">{{ manufacturer }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group mr-2">
+            <div class="input-group">
+                <input type="number" class="form-control" id="mileage_min" name="mileage_min" placeholder="Min Mileage">
+                <div class="input-group-append input-group-prepend">
+                    <span class="input-group-text">to</span>
+                </div>
+                <input type="number" class="form-control" id="mileage_max" name="mileage_max" placeholder="Max Mileage">
+            </div>
+        </div>
+
+        <div class="form-group mr-2">
+            <div class="input-group">
+                <input type="number" class="form-control" id="price_min" name="price_min" placeholder="Min Price">
+                <div class="input-group-append input-group-prepend">
+                    <span class="input-group-text">to</span>
+                </div>
+                <input type="number" class="form-control" id="price_max" name="price_max" placeholder="Max Price">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+
+    {% if location_id or manufacturer or mileage_min or mileage_max or price_min or price_max %}
+    <div class="active-filters mb-4">
+        <h5>Active Filters:</h5>
+        <ul class="list-inline">
+            {% if location_id %}
+            <li class="list-inline-item">Location: {{ location.city }}, {{ location.state }}</li>
+            {% endif %}
+            {% if manufacturer %}
+            <li class="list-inline-item">Manufacturer: {{ manufacturer }}</li>
+            {% endif %}
+            {% if mileage_min and mileage_max %}
+            <li class="list-inline-item">Mileage: {{ mileage_min }} - {{ mileage_max }}</li>
+            {% elif mileage_min %}
+            <li class="list-inline-item">Mileage: >= {{ mileage_min }}</li>
+            {% elif mileage_max %}
+            <li class="list-inline-item">Mileage: <= {{ mileage_max }}</li>
+            {% endif %}
+            {% if price_min and price_max %}
+            <li class="list-inline-item">Price per Hour: ${{ price_min }} - ${{ price_max }}</li>
+            {% elif price_min %}
+            <li class="list-inline-item">Price per Hour: >= ${{ price_min }}</li>
+            {% elif price_max %}
+            <li class="list-inline-item">Price per Hour: <= ${{ price_max }}</li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+
 
     <div class="row">
         {% for car in cars %}
