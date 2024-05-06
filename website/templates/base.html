@@ -10,8 +10,7 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
     <!-- Include Font Awesome CSS from a CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/3f151259d1.js" crossorigin="anonymous"></script>
 
     <!-- Include custom css files -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
@@ -34,7 +33,7 @@
 
                 <!-- Search bar -->
                 <form class="form-inline bg-white pl-3 pr-2 rounded navbar-collapse">
-                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <i class="fa-solid fa-magnifying-glass"></i>
                     <input class="form-control shadow-none" style="width: 370px;" type="search" placeholder="Location"
                         aria-label="Search">
                 </form>
@@ -46,7 +45,7 @@
                         <a class="nav-item nav-link text-white" id="home" href="/payment">My Reservations</a>
                         <a class="nav-item nav-link text-white" id="logout" href="/logout">Logout</a>
                         <a class="nav-item nav-link text-white" id="profile" href="{{ url_for('auth.profile') }}">
-                            <i class="fa fa-user"></i> Profile
+                            <i class="fa-solid fa-user"></i> Profile
                         </a>
                         {% else %}
                         <a class="nav-item nav-link text-white" id="login" href="/login">Login</a>

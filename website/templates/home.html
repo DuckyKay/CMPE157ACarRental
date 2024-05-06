@@ -25,7 +25,7 @@
         <h2 class="h1"> Try our new cars</h2>
 
         <form action="">
-            <span class="form-check-inline h5"><i class="fa fa-filter mr-2" aria-hidden="true"></i>Price per day</span>
+            <span class="form-check-inline h5"><i class="fa-solid fa-filter mr-2"></i></i>Price per day</span>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="price-low" value="low">
                 <label class="form-check-label" for="price-low">$0-$75</label>
@@ -45,7 +45,8 @@
         {% for car in cars %}
         <div class="card mb-4">
             <div class="card-body">
-                <div class="car-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ car.location.city }}, {{ car.location.state }}</div>
+                <div class="car-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ car.location.city }},
+                    {{ car.location.state }}</div>
                 <div class="car-model h3 mb-0">{{ car.make }} {{ car.model }}</div>
                 <div class="car-price h5">${{ car.price_per_hour }}/hour</div>
                 <div class="car-mileage">
@@ -61,6 +62,7 @@
     </div>
 
     {% include "/includes/login_popup.html" %}
+    {% include "/includes/signup_popup.html" %}
 
 </div>
 {% endblock %}
