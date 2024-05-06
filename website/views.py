@@ -1,6 +1,11 @@
 # Stores Website URLs
-from flask import Blueprint, render_template, request  # views can be defined in multiple files using Blueprint
+from datetime import datetime
+
+from flask import Blueprint, render_template, request, flash, \
+    redirect, url_for  # views can be defined in multiple files using Blueprint
 from flask_login import login_required, current_user
+
+from . import db
 from .models import Car, Reservation, User, Location
 
 views = Blueprint('views', __name__)  # blueprint setup
@@ -36,3 +41,63 @@ def home():
                            location=location, manufacturer=manufacturer,
                            mileage_min=mileage_min, mileage_max=mileage_max,
                            price_min=price_min, price_max=price_max)
+
+
+@views.route('/payment/<int:car_id>', methods=['GET', 'POST'])
+@login_required
+def payment(car_id):
+    car = Car.query.get_or_404(car_id)
+    user = current_user
+
+    if request.method == 'POST':
+        if not user.card_num or not user.cvv or not user.exp_date:
+            flash('Please update your card information in your profile before making a reservation.', 'error')
+            return redirect(url_for('auth.profile'))
+
+        # Process the form data and create a new reservation
+        pickup_date = request.form.get('pickup-date')
+        pickup_time = request.form.get('pickup-time')
+        dropoff_date = request.form.get('dropoff-date')
+        dropoff_time = request.form.get('dropoff-time')
+
+        # Combine the date and time values
+        pickup_datetime = datetime.strptime(pickup_date + ' ' + pickup_time, '%Y-%m-%d %H:%M')
+        dropoff_datetime = datetime.strptime(dropoff_date + ' ' + dropoff_time, '%Y-%m-%d %H:%M')
+
+        # Calculate the reservation length in hours
+        reservation_length = (dropoff_datetime - pickup_datetime).total_seconds() / 3600
+
+        # Calculate the total price based on the reservation length and car's price per hour
+        price = reservation_length * car.price_per_hour
+
+        # Create a new reservation
+        reservation = Reservation(
+            user=user,
+            car=car,
+            pickup_time=pickup_datetime,
+            dropoff_time=dropoff_datetime,
+            reservation_length=reservation_length,
+            price=price
+        )
+        db.session.add(reservation)
+        db.session.commit()
+
+        flash('Reservation created successfully!', 'success')
+        return redirect(url_for('views.reservations'))
+
+    return render_template('payment.html', car=car, user=user)
+
+@views.route('/reservations')
+@login_required
+def reservations():
+    current_reservations = Reservation.query.filter(
+        Reservation.user == current_user,
+        Reservation.pickup_time > datetime.now()
+    ).all()
+
+    past_reservations = Reservation.query.filter(
+        Reservation.user == current_user,
+        Reservation.pickup_time <= datetime.now()
+    ).all()
+
+    return render_template('reservations.html', current_reservations=current_reservations, past_reservations=past_reservations)

@@ -109,7 +109,7 @@
                     <div class="car-price h5">${{ car.price_per_hour }}/hour</div>
                     <div class="car-mileage">
                         Mileage: {{ car.mileage }}
-                        <button class="btn text-light px-4 py-1" data-toggle="modal" data-target=".login-popup">Reserve</button>
+                        <button class="btn text-light px-4 py-1" onclick="location.href='{{ url_for('views.payment', car_id=car.id) }}'">Reserve</button>
                     </div>
                 </div>
             </div>
