@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
-    <!-- Include Font Awesome CSS from a CDN -->
+    <!-- Include jQuery, Font Awesome CSS from a CDN -->
     <script src="https://kit.fontawesome.com/3f151259d1.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- Include custom css files -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/popup.css') }}">
     {% block css %} {% endblock %}
 
     <!-- Set the page title using a Jinja block -->
@@ -88,7 +89,7 @@
         {% endblock %}
     </div>
 
-    <!-- Include jQuery, Popper.js, and Bootstrap JS from CDNs -->
+    <!-- Include Popper.js, and Bootstrap JS from CDNs -->
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script> -->
