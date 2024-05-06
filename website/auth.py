@@ -127,9 +127,10 @@ def admin_login():
             session['admin_logged_in'] = True
             return redirect(url_for('auth.admin_dashboard'))
         else:
-            return "Invalid password. Please try again."
-    return render_template('admin_login.html')
+            flash('Invalid password. Please try again.', 'error')
+            return redirect(url_for('auth.admin_login'))
 
+    return render_template('admin_login.html')
 @auth.route('/admin/dashboard')
 def admin_dashboard():
     if not session.get('admin_logged_in'):
