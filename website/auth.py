@@ -114,9 +114,14 @@ def delete_account():
     flash('Your account has been deleted.', category='success')
     return redirect(url_for('auth.login'))
 
+
 @auth.route('/admin', methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
+        if request.form.get('logout'):
+            session.pop('admin_logged_in', None)
+            return redirect(url_for('auth.admin_login'))
+
         password = request.form.get('password')
         if password == 'CARRENTER1':
             session['admin_logged_in'] = True
@@ -139,6 +144,9 @@ def admin_dashboard():
 
 @auth.route('/add-location', methods=['POST'])
 def add_location():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     city = request.form.get('city')
     state = request.form.get('state')
     zip_code = request.form.get('zip_code')
@@ -151,6 +159,9 @@ def add_location():
 
 @auth.route('/edit-location/<int:location_id>', methods=['GET', 'POST'])
 def edit_location(location_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     location = Location.query.get_or_404(location_id)
 
     if request.method == 'POST':
@@ -164,6 +175,9 @@ def edit_location(location_id):
 
 @auth.route('/delete-location/<int:location_id>')
 def delete_location(location_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     location = Location.query.get_or_404(location_id)
     db.session.delete(location)
     db.session.commit()
@@ -172,6 +186,9 @@ def delete_location(location_id):
 
 @auth.route('/add-car', methods=['POST'])
 def add_car():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     location_id = request.form.get('location_id')
     price_per_hour = request.form.get('price_per_hour')
     plate_num = request.form.get('plate_num')
@@ -196,6 +213,9 @@ def add_car():
 
 @auth.route('/edit-car/<int:car_id>', methods=['GET', 'POST'])
 def edit_car(car_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     car = Car.query.get_or_404(car_id)
     locations = Location.query.all()
 
@@ -214,6 +234,9 @@ def edit_car(car_id):
 
 @auth.route('/delete-car/<int:car_id>')
 def delete_car(car_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     car = Car.query.get_or_404(car_id)
     db.session.delete(car)
     db.session.commit()
@@ -222,6 +245,9 @@ def delete_car(car_id):
 
 @auth.route('/add-reservation', methods=['POST'])
 def add_reservation():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     user_id = request.form.get('user_id')
     car_id = request.form.get('car_id')
     pickup_time = datetime.strptime(request.form.get('pickup_time'), '%Y-%m-%dT%H:%M')
@@ -236,6 +262,9 @@ def add_reservation():
 
 @auth.route('/edit-reservation/<int:reservation_id>', methods=['GET', 'POST'])
 def edit_reservation(reservation_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     reservation = Reservation.query.get_or_404(reservation_id)
     users = User.query.all()
     cars = Car.query.all()
@@ -255,6 +284,9 @@ def edit_reservation(reservation_id):
 
 @auth.route('/delete-reservation/<int:reservation_id>')
 def delete_reservation(reservation_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     reservation = Reservation.query.get_or_404(reservation_id)
     db.session.delete(reservation)
     db.session.commit()
@@ -263,6 +295,9 @@ def delete_reservation(reservation_id):
 
 @auth.route('/add-user', methods=['POST'])
 def add_user():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     email = request.form.get('email')
     first_name = request.form.get('first_name')
     last_name = request.form.get('last_name')
@@ -273,9 +308,11 @@ def add_user():
 
     return redirect(url_for('auth.admin_dashboard'))
 
-# THIS ONE IS FOR ADMINS
 @auth.route('/edit-user/<int:user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     user = User.query.get_or_404(user_id)
 
     if request.method == 'POST':
@@ -292,6 +329,9 @@ def edit_user(user_id):
 
 @auth.route('/delete-user/<int:user_id>')
 def delete_user(user_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('auth.admin_login'))
+
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
