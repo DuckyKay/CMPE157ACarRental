@@ -59,11 +59,11 @@ def sign_up():
                 first_name=first_name,
                 last_name=last_name,
                 phone_num=phone_num,
-                birthday=datetime.datetime.strptime(birthday, '%Y-%m-%d').date(),
+                birthday=datetime.strptime(birthday, '%Y-%m-%d').date(),
                 # not needed
                 card_num="123",
                 cvv="123",
-                exp_date=datetime.datetime.strptime(birthday, '%Y-%m-%d').date(),
+                exp_date=datetime.strptime(birthday, '%Y-%m-%d').date(),
                 # till here
                 license_num=license_num,
                 password=generate_password_hash(password1, method='pbkdf2:sha256')
