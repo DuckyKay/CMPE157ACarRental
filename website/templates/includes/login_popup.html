@@ -16,8 +16,8 @@
             <div class="modal-body">
                 <form class="auth-form">
                     <div class="form-group">
-                        <label for="login-username">Username</label>
-                        <input type="text" class="form-control" id="login-username" name="username" />
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" />
                     </div>
                     <div class="form-group">
                         <label for="login-password">Password</label>
@@ -39,8 +39,24 @@
 <script>
     const loginModal = document.getElementById("login-popup");
     const loginForm = document.getElementsByClassName("auth-form")[0];
+    const info = document.getElementsByClassName("info-text")[0];
 
     const observer1 = new MutationObserver(() => { loginForm.reset() });
     observer1.observe(loginModal, { attributes: true, attributeFilter: ["class"] });
+    loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = $('#email').val();
+        const password = $('#login-password').val();
+        $.ajax({
+            url: "/login",
+            method: "POST",
+            data: { email: email, password: password },
+            success: (data) => {
+                if (data.error) info.innerHTML = data.error
+                else document.location.href = "/"
+            }
+        })
+    })
+
 </script>
 {% endblock%}

@@ -11,6 +11,7 @@
 
     <!-- Include Font Awesome CSS from a CDN -->
     <script src="https://kit.fontawesome.com/3f151259d1.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- Include custom css files -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
@@ -45,7 +46,7 @@
                         <a class="nav-item nav-link text-white" id="home" href="/payment">My Reservations</a>
                         <a class="nav-item nav-link text-white" id="logout" href="/logout">Logout</a>
                         <a class="nav-item nav-link text-white" id="profile" href="{{ url_for('auth.profile') }}">
-                            <i class="fa-solid fa-user"></i> Profile
+                            <i class="fa-solid fa-user"></i>
                         </a>
                         {% else %}
                         <a class="nav-item nav-link text-white" id="login" href="/login">Login</a>
@@ -88,9 +89,9 @@
     </div>
 
     <!-- Include jQuery, Popper.js, and Bootstrap JS from CDNs -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>

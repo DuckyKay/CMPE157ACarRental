@@ -1,7 +1,7 @@
 # Flask Authentication for login
 import datetime
 
-from flask import Blueprint, render_template, request, flash, redirect, url_for, session  # views can be defined in multiple files
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session, jsonify  # views can be defined in multiple files
 from . import db
 from .models import User, Location, Reservation, Car
 from werkzeug.security import generate_password_hash, check_password_hash # password hashing
@@ -19,16 +19,10 @@ def login():
         user = User.query.filter(User.email.ilike(email)).first()  # search column for entered email and return first result
         if user:
             if check_password_hash(user.password, password):  # if password matches
-                flash('Logged in successfully!', 'success')
                 login_user(user, remember=True) # while webserver is running. user will stay logged in until they log out
-                return redirect(url_for('views.home'))
-            else:
-                flash('Incorrect password, try again', 'error')
-        else:
-            flash('Email does not exist', 'error')
+                return jsonify({"message": "Logged in successfully!"})
 
-    return render_template('login.html')
-
+    return jsonify({"error": "Incorrect email and or password"})
 
 @auth.route('/logout')
 @login_required # cannot access this route unless user is logged in
