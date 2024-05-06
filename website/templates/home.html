@@ -95,24 +95,30 @@
         {% endif %}
     </div>
 
-    <div class="card-columns">
+    <div class="row">
         {% for car in cars %}
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="car-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ car.location.city }},
-                    {{ car.location.state }}</div>
-                <div class="car-model h3 mb-0">{{ car.make }} {{ car.model }}</div>
-                <div class="car-price h5">${{ car.price_per_hour }}/hour</div>
-                <div class="car-mileage">
-                    Mileage: {{ car.mileage }}
-                    <button class="btn text-light px-4 py-1" data-toggle="modal"
-                        data-target=".login-popup">Reserve</button>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-img-top-wrapper">
+                    <img src="{{ car.photo_url }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
+                </div>
+                <div class="card-body">
+                    <div class="car-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ car.location.city }}, {{ car.location.state }}</div>
+                    <div class="car-model h3 mb-0">{{ car.make }} {{ car.model }}</div>
+                    <div class="car-price h5">${{ car.price_per_hour }}/hour</div>
+                    <div class="car-mileage">
+                        Mileage: {{ car.mileage }}
+                        <button class="btn text-light px-4 py-1" data-toggle="modal" data-target=".login-popup">Reserve</button>
+                    </div>
                 </div>
             </div>
-
-            <img class="card-img-bottom" src="{{ car.photo_url }}" alt="{{ car.make }} {{ car.model }}">
         </div>
+        {% if loop.index % 3 == 0 %}
+    </div>
+    <div class="row">
+        {% endif %}
         {% endfor %}
+    </div>
 {#        {% for i in range(0,2) %}#}
 {#        {% include "/includes/car_gridview.html" %}#}
 {#        {% endfor %}#}

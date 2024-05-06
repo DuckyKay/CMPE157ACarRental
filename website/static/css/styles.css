@@ -44,3 +44,19 @@ h4 {
 .nav-link {
     font-size: 1.25em;
 }
+
+.card-img-top-wrapper {
+    position: relative;
+    padding-top: 65%; /* 4:3 aspect ratio */
+    overflow: hidden;
+}
+
+.card-img-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 4px solid #fff; /* Add border to the image */
+}
