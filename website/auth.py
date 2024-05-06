@@ -1,7 +1,7 @@
 # Flask Authentication for login
 import datetime
 
-from flask import Blueprint, render_template, request, flash, redirect, url_for, session  # views can be defined in multiple files
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session, jsonify  # views can be defined in multiple files
 from . import db
 from .models import User, Location, Reservation, Car
 from werkzeug.security import generate_password_hash, check_password_hash # password hashing
@@ -19,22 +19,16 @@ def login():
         user = User.query.filter(User.email.ilike(email)).first()  # search column for entered email and return first result
         if user:
             if check_password_hash(user.password, password):  # if password matches
-                flash('Logged in successfully!', 'success')
                 login_user(user, remember=True) # while webserver is running. user will stay logged in until they log out
-                return redirect(url_for('views.home'))
-            else:
-                flash('Incorrect password, try again', 'error')
-        else:
-            flash('Email does not exist', 'error')
+                return jsonify({"message": "Logged in successfully!"})
 
-    return render_template('login.html')
-
+    return jsonify({"error": "Incorrect email and or password"})
 
 @auth.route('/logout')
 @login_required # cannot access this route unless user is logged in
 def logout():
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('views.home'))
 
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
@@ -45,24 +39,21 @@ def sign_up():
         last_name = request.form.get('last_name')
         phone_num = request.form.get('phone_num')
         birthday = request.form.get('birthday')
-        card_num = request.form.get('card_num')
-        cvv = request.form.get('cvv')
-        exp_date = request.form.get('exp_date')
         license_num = request.form.get('license_num')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
         user = User.query.filter(User.email.ilike(email)).first()
         if user:
-            flash('Email already exists.', category='error')
+            return jsonify({"error": 'Email already exists.'})
         elif len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
+            return jsonify({"error": 'Email must be greater than 3 characters.'})
         elif len(first_name) < 2:
-            flash('First name must be greater than 1 character.', category='error')
+            return jsonify({"error": 'First name must be greater than 1 character.'})
         elif password1 != password2:
-            flash('Passwords don\'t match.', category='error')
+            return jsonify({"error": 'Passwords don\'t match.'})
         elif len(password1) < 7:
-            flash('Password must be at least 7 characters.', category='error')
+            return jsonify({"error": 'Password must be at least 7 characters.'})
         else:
             new_user = User(
                 email=email,
@@ -70,18 +61,19 @@ def sign_up():
                 last_name=last_name,
                 phone_num=phone_num,
                 birthday=datetime.datetime.strptime(birthday, '%Y-%m-%d').date(),
-                card_num=card_num,
-                cvv=cvv,
-                exp_date=datetime.datetime.strptime(exp_date, '%Y-%m-%d').date(),
+                # not needed
+                card_num="123",
+                cvv="123",
+                exp_date=datetime.datetime.strptime(birthday, '%Y-%m-%d').date(),
+                # till here
                 license_num=license_num,
                 password=generate_password_hash(password1, method='pbkdf2:sha256')
             )
             db.session.add(new_user)
             db.session.commit()
-            flash('Account created!', category='success')
-            return redirect(url_for('auth.login'))
+            return jsonify({"message": 'Account created!'})
 
-    return render_template("sign_up.html")
+    return jsonify({"error": 'Some error has occured'})
 
 @auth.route('/profile', methods=['GET', 'POST'])
 @login_required

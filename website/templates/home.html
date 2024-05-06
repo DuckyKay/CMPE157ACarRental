@@ -42,7 +42,7 @@
     </div>
 
     <div class="card-columns">
-        {% for car in cars %}
+        <!-- {% for car in cars %}
         <div class="card mb-4">
             <div class="card-body">
                 <div class="car-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ car.location.city }},
@@ -58,11 +58,14 @@
 
             <img class="card-img-bottom" src="{{ car.photo_url }}" alt="{{ car.make }} {{ car.model }}">
         </div>
+        {% endfor %} -->
+        {% for i in range(0,2) %}
+        {% include "/includes/car_gridview.html" %}
         {% endfor %}
+
     </div>
 
     {% include "/includes/login_popup.html" %}
-    {% include "/includes/signup_popup.html" %}
 
 </div>
 {% endblock %}

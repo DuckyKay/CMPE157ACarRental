@@ -22,7 +22,7 @@
                     <div class="form-step">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" />
+                            <input type="email" class="form-control" id="signup-email" name="email" />
                         </div>
                         <div class="form-group">
                             <label for="username">Username</label>
@@ -31,7 +31,7 @@
                         <div class="form-row">
                             <div class="form-group col">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" />
+                                <input type="password" class="form-control" id="signup-password" name="password" />
                             </div>
                             <div class="form-group col">
                                 <label for="confirm-password">Confirm Password</label>
@@ -49,7 +49,7 @@
                             </div>
                             <div class="form-group col">
                                 <label for="last-name">Last Name</label>
-                                <input type="password" class="form-control" id="last-name" name="last-name" />
+                                <input type="text" class="form-control" id="last-name" name="last-name" />
                             </div>
                         </div>
                         <div class="form-row">
@@ -58,13 +58,13 @@
                                 <input type="date" class="form-control" id="birthday" name="birthday" />
                             </div>
                             <div class="form-group col">
-                                <label for="phone_num">Phone Number</label>
-                                <input type="tel" class="form-control" id="phone_num" name="phone_num" />
+                                <label for="phone-num">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone-num" name="phone-num" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="license_num">License Number</label>
-                            <input type="text" class="form-control" id="license_num" name="license_num" />
+                            <label for="license-num">License Number</label>
+                            <input type="text" class="form-control" id="license-num" name="license-num" />
                         </div>
                         <button class="btn text-white mt-3" id="signup-btn">Sign up</button>
                     </div>
@@ -83,7 +83,7 @@
 <script>
     const signupModal = document.getElementById("signup-popup");
     const signupForm = document.getElementsByClassName("auth-form")[1];
-    const info = document.getElementsByClassName("info-text")[1];
+    const signupInfo = document.getElementsByClassName("info-text")[1];
 
     const steps = document.getElementsByClassName("form-step");
     const backBtn = document.getElementById("back");
@@ -92,14 +92,14 @@
     const stepOne = () => {
         steps[0].classList.remove("d-none");
         steps[1].classList.add("d-none");
-        info.innerHTML = "Account Information";
+        signupInfo.innerHTML = "Account Information";
         backBtn.style.display = "none";
     }
 
     const stepTwo = () => {
         steps[0].classList.add("d-none");
         steps[1].classList.remove("d-none");
-        info.innerHTML = "Must match Driver's License";
+        signupInfo.innerHTML = "Must match Driver's License";
         backBtn.style.display = "inline-block";
     }
 
@@ -111,6 +111,28 @@
         signupForm.reset();
     });
     observer2.observe(signupModal, { attributes: true, attributeFilter: ["class"] });
+
+    signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        $.ajax({
+            url: "/sign-up",
+            method: "POST",
+            data: {
+                "email": $('#signup-email').val(),
+                "password1": $('#signup-password').val(),
+                "password2": $('#confirm-password').val(),
+                "first_name": $('#first-name').val(),
+                "last_name": $('#last-name').val(),
+                "birthday": $('#birthday').val(),
+                "phone_num": $('#phone-num').val(),
+                "license_num": $('#license-num').val()
+            },
+            success: (data) => {
+                if (data.error) signupInfo.innerHTML = data.error
+                else document.location.href = "/"
+            }
+        })
+    })
 
 </script>
 {% endblock%}
