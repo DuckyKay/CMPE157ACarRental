@@ -50,6 +50,10 @@ def payment(car_id):
     user = current_user
 
     if request.method == 'POST':
+        if not user.card_num or not user.cvv or not user.exp_date:
+            flash('Please update your card information in your profile before making a reservation.', 'error')
+            return redirect(url_for('auth.profile'))
+
         # Process the form data and create a new reservation
         pickup_date = request.form.get('pickup-date')
         pickup_time = request.form.get('pickup-time')
@@ -79,6 +83,21 @@ def payment(car_id):
         db.session.commit()
 
         flash('Reservation created successfully!', 'success')
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.reservations'))
 
     return render_template('payment.html', car=car, user=user)
+
+@views.route('/reservations')
+@login_required
+def reservations():
+    current_reservations = Reservation.query.filter(
+        Reservation.user == current_user,
+        Reservation.pickup_time > datetime.now()
+    ).all()
+
+    past_reservations = Reservation.query.filter(
+        Reservation.user == current_user,
+        Reservation.pickup_time <= datetime.now()
+    ).all()
+
+    return render_template('reservations.html', current_reservations=current_reservations, past_reservations=past_reservations)

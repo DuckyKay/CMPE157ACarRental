@@ -76,48 +76,30 @@
                 <div class="pay-method col-lg" style="margin-bottom: 0.94em;">
                     <h5 class="mb-1">Payment Method</h5>
 
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="credit-card" id="exist" value="exist">
-                        <label class="form-check-label" for="exist">Choose existing card</label>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="credit-card" id="new" value="new" checked>
-                        <label class="form-check-label" for="new">Add new card</label>
-                    </div>
-
-                    <div class="existing-card-form d-none">
-                        <div class="form-group">
-                            <label for="card-select">Select an selecting card</label>
-                            <select class="form-control form-control-sm" id="card-select">
-                                <!-- replace with cards from db -->
-                                {% for i in range(0,3) %}
-                                <option>Visa ending in {{i+1000}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="new-card-form">
+                    {% if user.card_num and user.cvv and user.exp_date %}
+                    <div class="card-info">
                         <div class="form-group">
                             <label for="card-num">Card Number</label>
-                            <input type="tel" class="form-control form-control-sm" name="card-num" id="card-num">
+                            <input type="tel" class="form-control form-control-sm" name="card-num" id="card-num" value="{{ user.card_num }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="card-holder">Name on Card</label>
-                            <input type="text" class="form-control form-control-sm" name="card-holder" id="card-holder">
+                            <input type="text" class="form-control form-control-sm" name="card-holder" id="card-holder" value="{{ user.first_name }} {{ user.last_name }}" readonly>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-8">
                                 <label for="expire-date">Expiration Date</label>
-                                <input type="date" class="form-control form-control-sm" name="expire-date"
-                                    id="expire-date">
+                                <input type="text" class="form-control form-control-sm" name="expire-date" id="expire-date" value="{{ user.exp_date.strftime('%m/%Y') }}" readonly>
                             </div>
                             <div class="form-group col-4">
                                 <label for="cvv">CVV</label>
-                                <input type="tel" class="form-control form-control-sm" name="cvv" id="cvv">
+                                <input type="tel" class="form-control form-control-sm" name="cvv" id="cvv" value="{{ user.cvv }}" readonly>
                             </div>
                         </div>
                     </div>
+                    {% else %}
+                    <p>Please update your card information in your profile before making a reservation.</p>
+                    {% endif %}
                 </div>
                 <div class="billing-info mb-3 col-lg">
                     <h5 class=" mb-1">Billing Info</h5>

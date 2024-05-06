@@ -9,14 +9,14 @@
 {% block content %}
 <h2 class="mt-5 mb-3">Current Reservations</h2>
 <div class="card-columns">
-    {% for i in range(0,4) %}
+    {% for reservation in current_reservations %}
     {% include "/includes/car_listview.html" %}
     {% endfor %}
 </div>
 
 <h2 class="mt-3 mb-3">Past Reservations</h2>
 <div class="card-columns">
-    {% for i in range(0,4) %}
+    {% for reservation in past_reservations %}
     {% include "/includes/car_listview.html" %}
     {% endfor %}
 </div>
