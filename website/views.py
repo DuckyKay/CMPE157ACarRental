@@ -10,6 +10,7 @@ from .models import Car, Reservation, User, Location
 
 views = Blueprint('views', __name__)  # blueprint setup
 
+
 @views.route('/', methods=['GET'])
 def home():
     location_id = request.args.get('location')
@@ -18,6 +19,8 @@ def home():
     mileage_max = request.args.get('mileage_max')
     price_min = request.args.get('price_min')
     price_max = request.args.get('price_max')
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
 
     cars = Car.query
     if location_id:
@@ -33,6 +36,18 @@ def home():
     if price_max:
         cars = cars.filter(Car.price_per_hour <= price_max)
 
+    if start_date and end_date:
+        start_datetime = datetime.strptime(start_date, '%Y-%m-%dT%H:%M')
+        end_datetime = datetime.strptime(end_date, '%Y-%m-%dT%H:%M')
+
+        # Exclude cars with overlapping reservations
+        reserved_car_ids = db.session.query(Reservation.car_id).filter(
+            Reservation.pickup_time < end_datetime,
+            Reservation.dropoff_time > start_datetime
+        ).distinct().all()
+
+        cars = cars.filter(Car.id.notin_([id for id, in reserved_car_ids]))
+
     locations = Location.query.all()
     manufacturers = [car.make for car in Car.query.distinct(Car.make)]
     location = Location.query.get(location_id) if location_id else None
@@ -40,7 +55,8 @@ def home():
     return render_template('home.html', cars=cars, locations=locations, manufacturers=manufacturers,
                            location=location, manufacturer=manufacturer,
                            mileage_min=mileage_min, mileage_max=mileage_max,
-                           price_min=price_min, price_max=price_max)
+                           price_min=price_min, price_max=price_max,
+                           start_date=start_date, end_date=end_date)
 
 
 @views.route('/payment/<int:car_id>', methods=['GET', 'POST'])
