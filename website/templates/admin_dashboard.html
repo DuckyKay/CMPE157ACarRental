@@ -18,11 +18,11 @@
   <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#nav-user" role="tab" aria-controls="nav-user"
     aria-selected="false">User</a>
 </div>
-</nav>
+
 <div class="tab-content" id="nav-tabContent">
   <!-- Location Management -->
-  <div class="tab-pane show active" id="nav-location" role="tabpanel" aria-labelledby="nav-location-tab">
-    <h3>Locations</h3>
+  <div class="tab-pane px-3 show active" id="nav-location" role="tabpanel" aria-labelledby="nav-location-tab">
+    <h3 class="mt-4">Locations</h3>
     <form method="POST" action="{{ url_for('auth.add_location') }}">
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -41,7 +41,7 @@
       <button type="submit" class="btn btn-primary">Add Location</button>
     </form>
 
-    <table class="table mt-4">
+    <table class="table mt-5">
       <thead>
         <tr>
           <th>ID</th>
@@ -71,8 +71,8 @@
   </div>
 
   <!-- Car Management -->
-  <div class="tab-pane" id="nav-car" role="tabpanel" aria-labelledby="nav-car-tab">
-    <h3>Cars</h3>
+  <div class="tab-pane px-3" id="nav-car" role="tabpanel" aria-labelledby="nav-car-tab">
+    <h3 class="mt-4">Cars</h3>
     <form method="POST" action="{{ url_for('auth.add_car') }}">
       <div class="form-row">
         <div class="form-group col-6">
@@ -113,7 +113,7 @@
       <button type="submit" class="btn btn-primary">Add Car</button>
     </form>
 
-    <table class="table mt-3">
+    <table class="table mt-5">
       <thead>
         <tr>
           <th>ID</th>
@@ -144,8 +144,8 @@
   </div>
 
   <!-- Reservation Management -->
-  <div class="tab-pane" id="nav-reservation" role="tabpanel" aria-labelledby="nav-reservationt-tab">
-    <h3>Reservations</h3>
+  <div class="tab-pane px-3" id="nav-reservation" role="tabpanel" aria-labelledby="nav-reservationt-tab">
+    <h3 class="mt-4">Reservations</h3>
     <form method="POST" action="{{ url_for('auth.add_reservation') }}">
       <div class="form-group">
         <label for="user_id">User</label>
@@ -176,7 +176,7 @@
       <button type="submit" class="btn btn-primary">Add Reservation</button>
     </form>
 
-    <table class="table mt-3">
+    <table class="table mt-5">
       <thead>
         <tr>
           <th>ID</th>
@@ -211,8 +211,8 @@
   </div>
 
   <!-- User Management -->
-  <div class="tab-pane" id="nav-user" role="tabpanel" aria-labelledby="nav-user-tab">
-    <h3>Users</h3>
+  <div class="tab-pane px-3" id="nav-user" role="tabpanel" aria-labelledby="nav-user-tab">
+    <h3 class="mt-4">Users</h3>
     <form method="POST" action="{{ url_for('auth.add_user') }}">
       <div class="form-group">
         <label for="email">Email</label>
@@ -231,7 +231,7 @@
       <button type="submit" class="btn btn-primary">Add User</button>
     </form>
 
-    <table class="table mt-3">
+    <table class="table mt-5">
       <thead>
         <tr>
           <th>ID</th>
