@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Filter</button>
+        <button type="submit" class="btn btn-dark">Filter</button>
     </form>
 
     {% if location_id or manufacturer or mileage_min or mileage_max or price_min or price_max %}
@@ -83,14 +83,14 @@
             <li class="list-inline-item">Mileage: >= {{ mileage_min }}</li>
             {% elif mileage_max %}
             <li class="list-inline-item">Mileage: <= {{ mileage_max }}</li>
-            {% endif %}
-            {% if price_min and price_max %}
+                    {% endif %}
+                    {% if price_min and price_max %}
             <li class="list-inline-item">Price per Hour: ${{ price_min }} - ${{ price_max }}</li>
             {% elif price_min %}
             <li class="list-inline-item">Price per Hour: >= ${{ price_min }}</li>
             {% elif price_max %}
             <li class="list-inline-item">Price per Hour: <= ${{ price_max }}</li>
-            {% endif %}
+                    {% endif %}
         </ul>
     </div>
     {% endif %}
@@ -104,12 +104,14 @@
                     <img src="{{ car.photo_url }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
                 </div>
                 <div class="card-body">
-                    <div class="car-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ car.location.city }}, {{ car.location.state }}</div>
+                    <div class="car-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ car.location.city
+                        }}, {{ car.location.state }}</div>
                     <div class="car-model h3 mb-0">{{ car.make }} {{ car.model }}</div>
                     <div class="car-price h5">${{ car.price_per_hour }}/hour</div>
                     <div class="car-mileage">
                         Mileage: {{ car.mileage }}
-                        <button class="btn text-light px-4 py-1" onclick="location.href='{{ url_for('views.payment', car_id=car.id) }}'">Reserve</button>
+                        <button class="btn btn-dark px-4 py-1"
+                            onclick="location.href='{{ url_for('views.payment', car_id=car.id) }}'">Reserve</button>
                     </div>
                 </div>
             </div>
@@ -120,13 +122,13 @@
         {% endif %}
         {% endfor %}
     </div>
-{#        {% for i in range(0,2) %}#}
-{#        {% include "/includes/car_gridview.html" %}#}
-{#        {% endfor %}#}
+    {# {% for i in range(0,2) %}#}
+    {# {% include "/includes/car_gridview.html" %}#}
+    {# {% endfor %}#}
 
-    </div>
+</div>
 
-    {% include "/includes/login_popup.html" %}
+{% include "/includes/login_popup.html" %}
 
 </div>
 {% endblock %}
