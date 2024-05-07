@@ -16,10 +16,6 @@
     align-items: baseline;
 }
 
-.card-columns {
-    column-gap: 1.75em;
-}
-
 .card {
     border-radius: 2em;
 }
@@ -40,10 +36,6 @@
         display: block;
     }
 
-    .card-columns {
-        column-count: 1;
-    }
-
     .hero {
         height: 500px;
     }
@@ -55,18 +47,7 @@
         display: block;
     }
 
-    .card-columns {
-        column-count: 2;
-    }
-
     .hero {
         height: 650px;
-    }
-}
-
-/* lg - xl size */
-@media (min-width: 992px) and (max-width: 1200px) {
-    .card-columns {
-        column-count: 2;
     }
 }

@@ -1,18 +1,20 @@
-<div class="card mb-4">
+<div class="card">
     <div class="card-body">
-        <div class="car-location"><i class="fa-solid fa-location-dot"></i> San Jose, CA</div>
-        <div class="car-model h3 mb-0">Some Toyota Car</div>
-        <div class="car-price h5">$85/day</div>
+        <div class="car-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ car.location.city
+            }}, {{ car.location.state }}</div>
+        <div class="car-model h3 mb-0">{{ car.make }} {{ car.model }}</div>
+        <div class="car-price h5">${{ car.price_per_hour }}/hour</div>
         <div class="car-mileage">
-            Mileage: 15,157
+            Mileage: {{ car.mileage }}
             {% if current_user.is_authenticated %}
-            <button class="btn text-light px-4 py-1" onclick="location.href='/payment';">Reserve</button>
+            <button class="btn btn-dark px-4 py-1"
+                onclick="location.href='{{ url_for('views.payment', car_id=car.id) }}'">Reserve</button>
             {% else %}
-            <button class="btn text-light px-4 py-1" data-toggle="modal" data-target="#login-popup">Reserve</button>
+            <button class="btn btn-dark px-4 py-1" data-toggle="modal" data-target="#login-popup">Reserve</button>
             {% endif %}
-
         </div>
     </div>
-
-    <img class="card-img-bottom" src="{{ url_for('static', filename='sedan.png') }}.." alt="car">
+    <div class="card-img-top-wrapper">
+        <img src="{{ car.photo_url }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
+    </div>
 </div>
