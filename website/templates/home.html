@@ -23,52 +23,52 @@
 <div class="car-list">
     <div class="car-list-header mb-4">
         <h2 class="h1">Try our new cars</h2>
+        <button type="button" class="btn" data-toggle="popover" title="Filter" 
+            data-content='
+                <form action="" method="GET">
+                    <div class="form-group">
+                        <select class="form-control" id="location" name="location">
+                            <option value="">All Locations</option>
+                            {% for location in locations %}
+                            <option value="{{ location.id }}">{{ location.city }}, {{ location.state }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="manufacturer" name="manufacturer">
+                            <option value="">All Manufacturers</option>
+                            {% for manufacturer in manufacturers %}
+                            <option value="{{ manufacturer }}">{{ manufacturer }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="mileage_min" name="mileage_min" placeholder="Min Mileage">
+                            <div class="input-group-append input-group-prepend">
+                                <span class="input-group-text">to</span>
+                            </div>
+                            <input type="number" class="form-control" id="mileage_max" name="mileage_max" placeholder="Max Mileage">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="price_min" name="price_min" placeholder="Min Price">
+                            <div class="input-group-append input-group-prepend">
+                                <span class="input-group-text">to</span>
+                            </div>
+                            <input type="number" class="form-control" id="price_max" name="price_max" placeholder="Max Price">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-dark" id="filter-apply">Apply</button>
+                </form>
+            '>
+            <i class="fa-solid fa-filter"></i>
+        </button>
     </div>
 
-    <form action="" method="GET" class="form-inline">
-        <div class="form-group mr-2">
-            <select class="form-control" id="location" name="location">
-                <option value="">All Locations</option>
-                {% for location in locations %}
-                <option value="{{ location.id }}">{{ location.city }}, {{ location.state }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="form-group mr-2">
-            <select class="form-control" id="manufacturer" name="manufacturer">
-                <option value="">All Manufacturers</option>
-                {% for manufacturer in manufacturers %}
-                <option value="{{ manufacturer }}">{{ manufacturer }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="form-group mr-2">
-            <div class="input-group">
-                <input type="number" class="form-control" id="mileage_min" name="mileage_min" placeholder="Min Mileage">
-                <div class="input-group-append input-group-prepend">
-                    <span class="input-group-text">to</span>
-                </div>
-                <input type="number" class="form-control" id="mileage_max" name="mileage_max" placeholder="Max Mileage">
-            </div>
-        </div>
-
-        <div class="form-group mr-2">
-            <div class="input-group">
-                <input type="number" class="form-control" id="price_min" name="price_min" placeholder="Min Price">
-                <div class="input-group-append input-group-prepend">
-                    <span class="input-group-text">to</span>
-                </div>
-                <input type="number" class="form-control" id="price_max" name="price_max" placeholder="Max Price">
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-dark">Filter</button>
-    </form>
-
     {% if location_id or manufacturer or mileage_min or mileage_max or price_min or price_max %}
-    <div class="active-filters mb-4">
+    <div class="active-filters mb-5">
         <h5>Active Filters:</h5>
         <ul class="list-inline">
             {% if location_id %}
@@ -109,3 +109,17 @@
 
 </div>
 {% endblock %}
+
+{% block javascript %}
+<script>
+    // popover is blurry in Google Chrome without this line (code is from BootStrap Popover documentation)
+    Popper.Defaults.modifiers.computeStyle.gpuAcceleration = !(window.devicePixelRatio < 1.5 && /Win/.test(navigator.platform))
+    
+    $(function () {
+        $('[data-toggle="popover"]').popover({
+            html : true,
+            sanitize: false
+        })
+    })
+</script>
+{% endblock%}
