@@ -95,36 +95,13 @@
     </div>
     {% endif %}
 
-
     <div class="row">
         {% for car in cars %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-img-top-wrapper">
-                    <img src="{{ car.photo_url }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
-                </div>
-                <div class="card-body">
-                    <div class="car-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ car.location.city
-                        }}, {{ car.location.state }}</div>
-                    <div class="car-model h3 mb-0">{{ car.make }} {{ car.model }}</div>
-                    <div class="car-price h5">${{ car.price_per_hour }}/hour</div>
-                    <div class="car-mileage">
-                        Mileage: {{ car.mileage }}
-                        <button class="btn btn-dark px-4 py-1"
-                            onclick="location.href='{{ url_for('views.payment', car_id=car.id) }}'">Reserve</button>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-6 col-xl-4 mb-4">
+        {% include "/includes/car_gridview.html" %}
         </div>
-        {% if loop.index % 3 == 0 %}
-    </div>
-    <div class="row">
-        {% endif %}
         {% endfor %}
     </div>
-    {# {% for i in range(0,2) %}#}
-    {# {% include "/includes/car_gridview.html" %}#}
-    {# {% endfor %}#}
 
 </div>
 

@@ -1,9 +1,9 @@
 {% extends "base.html" %} {% block title %}Admin Panel{% endblock %} {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-2">
+<div class="d-flex justify-content-between align-items-end mb-2">
   <h2 class="mt-4">Admin Dashboard</h2>
   <form action="{{ url_for('auth.admin_login') }}" method="post" class="d-inline">
     <input type="hidden" name="logout" value="true">
-    <button type="submit" class="btn btn-secondary">Logout</button>
+    <button type="submit" class="btn btn-dark">Logout</button>
   </form>
 </div>
 
@@ -72,7 +72,7 @@
   <!-- Car Management -->
   <div class="tab-pane px-3" id="nav-car" role="tabpanel" aria-labelledby="nav-car-tab">
     <h3 class="mt-4">Cars</h3>
-    <form method="POST" action="{{ url_for('auth.add_car') }}">
+    <form class="form-car" method="POST" action="{{ url_for('auth.add_car') }}">
       <div class="form-row">
         <div class="form-group col-6">
           <label for="make">Make</label>
@@ -258,9 +258,4 @@
     </table>
   </div>
 </div>
-
-
-
-
-
 {% endblock %}
