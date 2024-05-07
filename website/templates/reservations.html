@@ -10,14 +10,46 @@
 <h2 class="mt-5 mb-3">Current Reservations</h2>
 <div class="card-columns">
     {% for reservation in current_reservations %}
-    {% include "/includes/car_listview.html" %}
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="{{ reservation.car.photo_url }}" class="card-img" alt="{{ reservation.car.make }} {{ reservation.car.model }}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ reservation.car.make }} {{ reservation.car.model }}</h5>
+                    <p class="card-text">
+                        <strong>Pickup:</strong> {{ reservation.pickup_location.city }}, {{ reservation.pickup_location.state }} - {{ reservation.pickup_time|datetime_local }}<br>
+                        <strong>Return:</strong> {{ reservation.return_location.city }}, {{ reservation.return_location.state }} - {{ reservation.dropoff_time|datetime_local }}<br>
+                        <strong>Price:</strong> ${{ reservation.price }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endfor %}
 </div>
 
 <h2 class="mt-3 mb-3">Past Reservations</h2>
 <div class="card-columns">
     {% for reservation in past_reservations %}
-    {% include "/includes/car_listview.html" %}
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="{{ reservation.car.photo_url }}" class="card-img" alt="{{ reservation.car.make }} {{ reservation.car.model }}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ reservation.car.make }} {{ reservation.car.model }}</h5>
+                    <p class="card-text">
+                        <strong>Pickup:</strong> {{ reservation.pickup_location.city }}, {{ reservation.pickup_location.state }} - {{ reservation.pickup_time|datetime_local }}<br>
+                        <strong>Return:</strong> {{ reservation.return_location.city }}, {{ reservation.return_location.state }} - {{ reservation.dropoff_time|datetime_local }}<br>
+                        <strong>Price:</strong> ${{ reservation.price }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}
