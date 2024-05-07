@@ -32,10 +32,6 @@
 
 /* < md size */
 @media (max-width: 768px) {
-    .car-list-header {
-        display: block;
-    }
-
     .hero {
         height: 500px;
     }
@@ -43,11 +39,27 @@
 
 /* md - lg size */
 @media (min-width: 768px) and (max-width: 992px) {
-    .car-list-header {
-        display: block;
-    }
-
     .hero {
         height: 650px;
     }
+}
+
+.fa-filter {
+    font-size: 1.2em;
+    color: #707070;
+}
+
+.popover {
+    min-width: 450px;
+}
+
+.popover-header {
+    background-color: black;
+    color: white;
+}
+
+.form-control,
+.input-group-text,
+#filter-apply {
+    font-size: inherit;
 }
