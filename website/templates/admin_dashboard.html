@@ -18,11 +18,11 @@
   <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#nav-user" role="tab" aria-controls="nav-user"
     aria-selected="false">User</a>
 </div>
-</nav>
+
 <div class="tab-content" id="nav-tabContent">
   <!-- Location Management -->
-  <div class="tab-pane show active" id="nav-location" role="tabpanel" aria-labelledby="nav-location-tab">
-    <h3>Locations</h3>
+  <div class="tab-pane px-3 show active" id="nav-location" role="tabpanel" aria-labelledby="nav-location-tab">
+    <h3 class="mt-4">Locations</h3>
     <form method="POST" action="{{ url_for('auth.add_location') }}">
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -38,10 +38,10 @@
           <input type="text" class="form-control" id="zip_code" name="zip_code" required>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Add Location</button>
+      <button type="submit" class="btn btn-dark">Add Location</button>
     </form>
 
-    <table class="table mt-4">
+    <table class="table mt-5">
       <thead>
         <tr>
           <th>ID</th>
@@ -59,8 +59,7 @@
           <td>{{ location.state }}</td>
           <td>{{ location.zip_code }}</td>
           <td>
-            <a href="{{ url_for('auth.edit_location', location_id=location.id) }}"
-              class="btn btn-primary btn-sm">Edit</a>
+            <a href="{{ url_for('auth.edit_location', location_id=location.id) }}" class="btn btn-dark btn-sm">Edit</a>
             <a href="{{ url_for('auth.delete_location', location_id=location.id) }}" class="btn btn-danger btn-sm"
               onclick="return confirm('Are you sure you want to delete this location?')">Delete</a>
           </td>
@@ -71,8 +70,8 @@
   </div>
 
   <!-- Car Management -->
-  <div class="tab-pane" id="nav-car" role="tabpanel" aria-labelledby="nav-car-tab">
-    <h3>Cars</h3>
+  <div class="tab-pane px-3" id="nav-car" role="tabpanel" aria-labelledby="nav-car-tab">
+    <h3 class="mt-4">Cars</h3>
     <form method="POST" action="{{ url_for('auth.add_car') }}">
       <div class="form-row">
         <div class="form-group col-6">
@@ -110,10 +109,10 @@
         <label for="photo_url">Photo URL</label>
         <input type="url" class="form-control" id="photo_url" name="photo_url" required>
       </div>
-      <button type="submit" class="btn btn-primary">Add Car</button>
+      <button type="submit" class="btn btn-dark">Add Car</button>
     </form>
 
-    <table class="table mt-3">
+    <table class="table mt-5">
       <thead>
         <tr>
           <th>ID</th>
@@ -133,7 +132,7 @@
           <td>{{ car.price_per_hour }}</td>
           <td><img src="{{ car.photo_url }}" alt="{{ car.make }} {{ car.model }}" width="100"></td>
           <td>
-            <a href="{{ url_for('auth.edit_car', car_id=car.id) }}" class="btn btn-primary btn-sm">Edit</a>
+            <a href="{{ url_for('auth.edit_car', car_id=car.id) }}" class="btn btn-dark btn-sm">Edit</a>
             <a href="{{ url_for('auth.delete_car', car_id=car.id) }}" class="btn btn-danger btn-sm"
               onclick="return confirm('Are you sure you want to delete this car?')">Delete</a>
           </td>
@@ -144,8 +143,8 @@
   </div>
 
   <!-- Reservation Management -->
-  <div class="tab-pane" id="nav-reservation" role="tabpanel" aria-labelledby="nav-reservationt-tab">
-    <h3>Reservations</h3>
+  <div class="tab-pane px-3" id="nav-reservation" role="tabpanel" aria-labelledby="nav-reservationt-tab">
+    <h3 class="mt-4">Reservations</h3>
     <form method="POST" action="{{ url_for('auth.add_reservation') }}">
       <div class="form-group">
         <label for="user_id">User</label>
@@ -173,10 +172,10 @@
           <input type="datetime-local" class="form-control" id="dropoff_time" name="dropoff_time" required>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Add Reservation</button>
+      <button type="submit" class="btn btn-dark">Add Reservation</button>
     </form>
 
-    <table class="table mt-3">
+    <table class="table mt-5">
       <thead>
         <tr>
           <th>ID</th>
@@ -199,7 +198,7 @@
           <td>{{ reservation.price }}</td>
           <td>
             <a href="{{ url_for('auth.edit_reservation', reservation_id=reservation.id) }}"
-              class="btn btn-primary btn-sm">Edit</a>
+              class="btn btn-dark btn-sm">Edit</a>
             <a href="{{ url_for('auth.delete_reservation', reservation_id=reservation.id) }}"
               class="btn btn-danger btn-sm"
               onclick="return confirm('Are you sure you want to delete this reservation?')">Delete</a>
@@ -211,8 +210,8 @@
   </div>
 
   <!-- User Management -->
-  <div class="tab-pane" id="nav-user" role="tabpanel" aria-labelledby="nav-user-tab">
-    <h3>Users</h3>
+  <div class="tab-pane px-3" id="nav-user" role="tabpanel" aria-labelledby="nav-user-tab">
+    <h3 class="mt-4">Users</h3>
     <form method="POST" action="{{ url_for('auth.add_user') }}">
       <div class="form-group">
         <label for="email">Email</label>
@@ -228,10 +227,10 @@
           <input type="text" class="form-control" id="last_name" name="last_name" required>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Add User</button>
+      <button type="submit" class="btn btn-dark">Add User</button>
     </form>
 
-    <table class="table mt-3">
+    <table class="table mt-5">
       <thead>
         <tr>
           <th>ID</th>
@@ -249,7 +248,7 @@
           <td>{{ user.first_name }}</td>
           <td>{{ user.last_name }}</td>
           <td>
-            <a href="{{ url_for('auth.edit_user', user_id=user.id) }}" class="btn btn-primary btn-sm">Edit</a>
+            <a href="{{ url_for('auth.edit_user', user_id=user.id) }}" class="btn btn-dark btn-sm">Edit</a>
             <a href="{{ url_for('auth.delete_user', user_id=user.id) }}" class="btn btn-danger btn-sm"
               onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
           </td>
